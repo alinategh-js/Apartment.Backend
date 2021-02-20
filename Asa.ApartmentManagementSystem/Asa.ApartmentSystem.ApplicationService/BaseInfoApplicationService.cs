@@ -12,11 +12,12 @@ namespace Asa.ApartmentSystem.ApplicationService
     public class BaseInfoApplicationService
     {
         ITableGatwayFactory tableGatewayFactory;
+
         public BaseInfoApplicationService(string connectionString)
         {
-            //HACK: This approach is not the best one, we will change it as soon as DI tools get introduced
             tableGatewayFactory = new SqlTableGatewayFactory(connectionString);
         }
+
         public async Task<int> CreateBuilding(string Name, int numberofUnits)
         {
             BuildingManager buildingManager = new BuildingManager(tableGatewayFactory);
@@ -24,10 +25,11 @@ namespace Asa.ApartmentSystem.ApplicationService
             await buildingManager.AddBuilding(buildingDto);
             return buildingDto.Id;
         }
-        public async Task<IEnumerable<OwnerTenantInfoDto>> GetAllOwnerTenantByUnitId(int unitid)
+
+        public async Task<IEnumerable<OwnerTenantInfoDto>> GetAllPeopleByPageAndType(int page, int size, int isOwner)
         {
-            var buildingManager = new BuildingManager(tableGatewayFactory);
-            return await buildingManager.GetAllOwnerTenantByUnitId(unitid);            
+            var personManager = new PersonManager(tableGatewayFactory);
+            return await personManager.GetAllPeopleByPageAndTypeAsync(page, size, isOwner);            
         }
     }
 }

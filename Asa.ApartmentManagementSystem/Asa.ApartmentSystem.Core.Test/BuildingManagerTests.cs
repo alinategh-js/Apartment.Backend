@@ -14,22 +14,6 @@ namespace Asa.ApartmentSystem.Core.Test
         {
         }
 
-
-
-        [Test]
-        public void RUN_Just_For_Test()
-        {
-            //A
-            BuildingManager buildingManager = new BuildingManager(new MyFakes.TableGatewyFactory());
-            int a = 10;
-            int b = 15;
-            //A
-
-            var result = buildingManager.JustForTest(a, b);
-            //A
-            Assert.AreEqual(a + b, result);
-        }
-
         [Test]
         public async Task Building_Name_Cannot_Be_Null_Or_Empty()
         {

@@ -26,5 +26,10 @@ namespace Asa.ApartmentSystem.Core.Test.MyFakes
         {
             throw new NotImplementedException();
         }
+
+        public IPersonTableGateway CreateIPersonTableGateway()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

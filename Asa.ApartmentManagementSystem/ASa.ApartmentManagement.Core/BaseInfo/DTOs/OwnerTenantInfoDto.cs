@@ -14,6 +14,7 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.DTOs
         public string UnitNumber { get; set; }
         public DateTime From { get; set; }
         public DateTime? To { get; set; }
+        public bool IsOwner { get; set; }
         public bool IsCurrent => !To.HasValue;
     }
 }
