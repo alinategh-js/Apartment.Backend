@@ -25,11 +25,5 @@ namespace Asa.ApartmentSystem.ApplicationService
             await buildingManager.AddBuilding(buildingDto);
             return buildingDto.Id;
         }
-
-        public async Task<IEnumerable<OwnerTenantInfoDto>> GetAllPeopleByPageAndType(int page, int size, int isOwner)
-        {
-            var personManager = new PersonManager(tableGatewayFactory);
-            return await personManager.GetAllPeopleByPageAndTypeAsync(page, size, isOwner);            
-        }
     }
 }
