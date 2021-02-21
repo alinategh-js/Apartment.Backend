@@ -18,11 +18,6 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
             _tablegatwayFactory = tablegatwayFactory;
         }
         
-        public int JustForTest(int a, int b)
-        {
-            return a + b;
-        }
-        
         public async Task AddBuilding(BuildingDTO building)
         {
             const int MAX_BUILDING_NAME_LENGTH = 50;
@@ -40,19 +35,15 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
             IBuildingTableGateway tableGateway = _tablegatwayFactory.CreateBuildingTableGateway();
             var id = await tableGateway.InsertBuildingAsync(building).ConfigureAwait(false);
             building.Id = id;
-
         }
-        
-        public async Task<IEnumerable<OwnerTenantInfoDto>> GetAllOwnerTenantByUnitId(int unitId)
+
+        public async Task<BuildingDTO> GetOnlyBuilding()
         {
-            if (unitId < 1)
-            {
-                return new List<OwnerTenantInfoDto>();
-            }
-            var tableGateway = _tablegatwayFactory.CreateIApartmentTableGateway();
-            return await tableGateway.GetAllOwnerTenant(unitId).ConfigureAwait(false);            
+            
+            IBuildingTableGateway tableGateway = _tablegatwayFactory.CreateBuildingTableGateway();
+            BuildingDTO building = await tableGateway.GetOnlyBuildingAsync().ConfigureAwait(false);
+            return building;
         }
-
 
     }
 }

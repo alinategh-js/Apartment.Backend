@@ -24,10 +24,11 @@ namespace Asa.ApartmentSystem.ApplicationService
             await buildingManager.AddBuilding(buildingDto);
             return buildingDto.Id;
         }
-        public async Task<IEnumerable<OwnerTenantInfoDto>> GetAllOwnerTenantByUnitId(int unitid)
+
+        public async Task<BuildingDTO> GetFirstBuilding()
         {
-            var buildingManager = new BuildingManager(tableGatewayFactory);
-            return await buildingManager.GetAllOwnerTenantByUnitId(unitid);            
+            BuildingManager buildingManager = new BuildingManager(tableGatewayFactory);
+            return await buildingManager.GetOnlyBuilding();
         }
     }
 }

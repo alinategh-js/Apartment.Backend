@@ -10,6 +10,5 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.DTOs
         public int Id { get; set; }
         public int BuidlingId { get; set; }
         public decimal Area { get; set; }
-        public string Description { get; set; }
     }
 }

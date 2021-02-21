@@ -35,5 +35,36 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
             }
             return id;
         }
+
+        public async Task<BuildingDTO> GetOnlyBuildingAsync()  // in progress : write sp first
+        {
+            var buildingDTO = new BuildingDTO();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[spGetOnlyBuilding]";
+                    cmd.Connection = connection;
+                    cmd.Connection.Open();
+                    using (var dataReader = await cmd.ExecuteReaderAsync())
+                    {
+                        
+                        //[Id],[name] ,[number_of_units]
+                        
+                        buildingDTO.Id = dataReader.Extract<int>("id");//== unitDTO.BuidlingId = Extensions.Extract<int>(dataReader,"building_id");
+                        buildingDTO.Name = dataReader.Extract<string>("name");
+                        buildingDTO.NumberOfUnits = dataReader.Extract<int>("number_of_units");
+                    }
+                }
+            }
+            return buildingDTO;
+        }
+
+        public Task<BuildingDTO> GetBuildingByIdAsync(int buildingId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
