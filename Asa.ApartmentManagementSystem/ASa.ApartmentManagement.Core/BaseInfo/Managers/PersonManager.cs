@@ -21,7 +21,7 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
             return await tableGateway.GetAllPeopleByPageAndTypeAsync(page, size, isOwner).ConfigureAwait(false);
         }
 
-        public async Task<int> CreatePerson(PersonDTO person)
+        public async Task<int> CreatePersonAsync(PersonDTO person)
         {
             const int MAX_PERSON_NAME_LENGTH = 50;
             const int MIN_PERSON_NAME_LENGTH = 5;
@@ -44,7 +44,7 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
             }
 
             var tableGateway = _tableGatewayFactory.CreateIPersonTableGateway();
-            return await tableGateway.InsertPerson(person).ConfigureAwait(false);
+            return await tableGateway.InsertPersonAsync(person).ConfigureAwait(false);
         }
     }
 }

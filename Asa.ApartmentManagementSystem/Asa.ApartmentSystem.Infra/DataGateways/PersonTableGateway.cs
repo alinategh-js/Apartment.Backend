@@ -56,7 +56,7 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
             return result;
         }
 
-        public async Task<int> InsertPerson(PersonDTO person)
+        public async Task<int> InsertPersonAsync(PersonDTO person)
         {
             int id = 0;
             using (var connection = new SqlConnection(_connectionString))
@@ -64,7 +64,7 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
                 using (var cmd = new SqlCommand())
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.CommandText = "[dbo].[person_create]";
+                    cmd.CommandText = "[dbo].[SpPersonCreate]";
                     cmd.Parameters.AddWithValue("@Name", person.FullName);
                     cmd.Parameters.AddWithValue("@NumberOfUnits", person.PhoneNumber);
                     cmd.Connection = connection;

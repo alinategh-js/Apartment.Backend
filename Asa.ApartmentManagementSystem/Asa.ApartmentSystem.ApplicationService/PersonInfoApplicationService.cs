@@ -24,11 +24,11 @@ namespace Asa.ApartmentSystem.ApplicationService
             return await personManager.GetAllPeopleByPageAndTypeAsync(page, size, isOwner);
         }
 
-        public async Task<int> CreatePerson(string fullName, string phoneNumber)
+        public async Task<int> CreatePersonAsync(string fullName, string phoneNumber)
         {
             var personManager = new PersonManager(_tableGatewayFactory);
             var person = new PersonDTO { FullName = fullName, PhoneNumber = phoneNumber };
-            return await personManager.CreatePerson(person);
+            return await personManager.CreatePersonAsync(person);
         }
     }
 }

@@ -1,10 +1,10 @@
-﻿CREATE procedure [dbo].[person_create]
+﻿CREATE procedure [dbo].[SpPersonCreate]
 @name nvarchar(50),
 @phone_number nvarchar(50)
 as
 
 INSERT INTO [dbo].[Person]
-           ([name]
+           ([full_name]
            ,[phone_number])
      VALUES
            (@name
