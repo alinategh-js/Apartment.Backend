@@ -35,7 +35,22 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
             IBuildingTableGateway tableGateway = _tablegatwayFactory.CreateBuildingTableGateway();
             var id = await tableGateway.InsertBuildingAsync(building).ConfigureAwait(false);
             building.Id = id;
-
         }
+
+        public async Task<BuildingDTO> GetOnlyBuilding()
+        {
+            
+            IBuildingTableGateway tableGateway = _tablegatwayFactory.CreateBuildingTableGateway();
+            BuildingDTO building = await tableGateway.GetOnlyBuildingAsync().ConfigureAwait(false);
+            return building;
+        }
+
+        public async Task<ApartmentUnitDTO> GetUnitByIdAsync(int unitId)
+        {
+            IApartmentTableGateway tableGateway = _tablegatwayFactory.CreateIApartmentTableGateway();
+            ApartmentUnitDTO unit = await tableGateway.GetUnitByIdAsync(unitId).ConfigureAwait(false);
+            return unit;
+        }
+
     }
 }

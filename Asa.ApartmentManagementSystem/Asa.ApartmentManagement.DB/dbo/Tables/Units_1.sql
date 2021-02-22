@@ -7,3 +7,5 @@
     CONSTRAINT [Fk_unit_building] FOREIGN KEY ([building_id]) REFERENCES [dbo].[Building] ([id])
 );
 
+
+
