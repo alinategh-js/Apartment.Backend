@@ -74,5 +74,6 @@
     <Build Include="dbo\Tables\expense_1.sql" />
     <Build Include="dbo\Stored Procedures\spGetPersonOwnerTenantByPageAndType.sql" />
     <Build Include="dbo\Tables\formula.sql" />
+    <Build Include="dbo\Stored Procedures\SpPersonCreate.sql" />
   </ItemGroup>
 </Project>

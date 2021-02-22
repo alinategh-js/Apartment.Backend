@@ -55,5 +55,25 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
             }
             return result;
         }
+
+        public async Task<int> InsertPersonAsync(PersonDTO person)
+        {
+            int id = 0;
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[SpPersonCreate]";
+                    cmd.Parameters.AddWithValue("@Name", person.FullName);
+                    cmd.Parameters.AddWithValue("@NumberOfUnits", person.PhoneNumber);
+                    cmd.Connection = connection;
+                    cmd.Connection.Open();
+                    var result = await cmd.ExecuteScalarAsync();
+                    id = Convert.ToInt32(result);
+                }
+            }
+            return id;
+        }
     }
 }
