@@ -45,5 +45,12 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
             return building;
         }
 
+        public async Task<ApartmentUnitDTO> GetUnitByIdAsync(int unitId)
+        {
+            IApartmentTableGateway tableGateway = _tablegatwayFactory.CreateIApartmentTableGateway();
+            ApartmentUnitDTO unit = await tableGateway.GetUnitByIdAsync(unitId).ConfigureAwait(false);
+            return unit;
+        }
+
     }
 }

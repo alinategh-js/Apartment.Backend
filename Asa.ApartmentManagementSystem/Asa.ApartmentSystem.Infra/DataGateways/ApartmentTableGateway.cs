@@ -50,7 +50,6 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
                             unitDTO.Id = dataReader.Extract<int>("id");
                             unitDTO.Number = dataReader.Extract<int>("number");
                             unitDTO.Area = dataReader.Extract<decimal>("area");
-                            unitDTO.Description = dataReader.Extract<string>("description", () => "No description");
                             result.Add(unitDTO);
                         }
                     }
@@ -109,6 +108,52 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
             //    });
             //result.AddRange(items);
             return result;
+        }
+
+        public async Task<ApartmentUnitDTO> GetUnitByIdAsync(int unitId)
+        {
+            var unitDTO = new ApartmentUnitDTO();
+            
+            using(var connection = new SqlConnection(_connectionString))
+            {
+                using(var cmd = new SqlCommand())
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[spGetUnitById]";
+                    cmd.Parameters.AddWithValue("@unitId", unitId);
+                    cmd.Connection = connection;
+                    cmd.Connection.Open();
+
+                    using (var dataReader = await cmd.ExecuteReaderAsync())
+                    {
+
+                        //[Id],[name] ,[number_of_units]
+
+                        unitDTO.Id = dataReader.Extract<int>("Id");//== unitDTO.BuidlingId = Extensions.Extract<int>(dataReader,"building_id");
+                        unitDTO.Number = dataReader.Extract<int>("number");
+                        unitDTO.Area = dataReader.Extract<decimal>("area");
+                    }
+                }
+            }
+            return unitDTO;
+        }
+
+        public Task<IEnumerable<UnitPersonDTO>> GetUnitPersonByPageAsync(int page)
+        {
+            var result = new List<UnitPersonDTO>();
+            using(var connection = new SqlConnection(_connectionString))
+            {
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[]";
+                }
+            }
+        }
+
+        public Task<int> InsertUnitAsync(ApartmentUnitDTO apartmentUnit)
+        {
+            throw new NotImplementedException();
         }
     }
 }

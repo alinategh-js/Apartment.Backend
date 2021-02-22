@@ -75,5 +75,7 @@
     <Build Include="dbo\Tables\expense_1.sql" />
     <Build Include="dbo\Stored Procedures\spGetPersonOwnerTenantByPageAndType.sql" />
     <Build Include="dbo\Stored Procedures\spGetOnlyBuilding.sql" />
+    <Build Include="dbo\Stored Procedures\spGetUnitById.sql" />
+    <Build Include="dbo\Stored Procedures\spGetUnitPersonByPage.sql" />
   </ItemGroup>
 </Project>
