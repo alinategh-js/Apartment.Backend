@@ -1,6 +1,6 @@
-﻿CREATE TABLE [dbo].[formula] (
-    [Id]   INT           NOT NULL,
-    [name] NVARCHAR (30) NOT NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
+﻿CREATE TABLE [dbo].[Formula] (
+    [FormulaId] INT           NOT NULL,
+    [Name]      NVARCHAR (30) NOT NULL,
+    PRIMARY KEY CLUSTERED ([FormulaId] ASC)
 );
 

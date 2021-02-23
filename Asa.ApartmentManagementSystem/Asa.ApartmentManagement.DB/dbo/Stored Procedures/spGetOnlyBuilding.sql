@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[spGetOnlyBuilding]
+﻿CREATE PROCEDURE [dbo].[SpGetOnlyBuilding]
 	
 AS
 BEGIN

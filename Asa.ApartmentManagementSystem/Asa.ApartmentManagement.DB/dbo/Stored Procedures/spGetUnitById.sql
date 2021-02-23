@@ -1,8 +1,8 @@
-﻿CREATE PROCEDURE [dbo].[spGetUnitById]
+﻿CREATE PROCEDURE [dbo].[SpGetUnitById]
 	@unitId int
 AS
 BEGIN
 	SELECT *
-	from Units u
-	where u.Id = @unitId
+	from Unit u
+	where u.UnitId = @unitId
 END
