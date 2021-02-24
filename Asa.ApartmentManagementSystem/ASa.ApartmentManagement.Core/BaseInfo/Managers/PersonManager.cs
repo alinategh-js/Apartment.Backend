@@ -46,5 +46,11 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
             var tableGateway = _tableGatewayFactory.CreateIPersonTableGateway();
             return await tableGateway.InsertPersonAsync(person).ConfigureAwait(false);
         }
+
+        public async Task<PersonDTO> GetPersonByIdAsync(int personId)
+        {
+            var tableGateway = _tableGatewayFactory.CreateIPersonTableGateway();
+            return await tableGateway.GetPersonByIdAsync(personId).ConfigureAwait(false);
+        }
     }
 }

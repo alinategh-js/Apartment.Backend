@@ -75,5 +75,6 @@
     <Build Include="dbo\Stored Procedures\SpGetOnlyBuilding_1.sql" />
     <Build Include="dbo\Stored Procedures\SpGetAllUnits_1.sql" />
     <Build Include="dbo\Stored Procedures\SpGetAllPersonUnit_1.sql" />
+    <Build Include="dbo\Stored Procedures\SpGetPersonById.sql" />
   </ItemGroup>
 </Project>

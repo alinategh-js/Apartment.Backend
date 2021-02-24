@@ -74,5 +74,30 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
             }
             return id;
         }
+
+        public async Task<PersonDTO> GetPersonByIdAsync(int personId)
+        {
+            var person = new PersonDTO();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[SpGetPersonById]";
+                    cmd.Parameters.AddWithValue("@personId", personId);
+                    cmd.Connection = connection;
+                    cmd.Connection.Open();
+
+                    using (var dataReader = await cmd.ExecuteReaderAsync())
+                    { 
+                        person.Id = dataReader.Extract<int>("PersonId");
+                        person.FullName = dataReader.Extract<string>("FullName");
+                        person.PhoneNumber = dataReader.Extract<string>("PhoneNumber");
+                    }
+                }
+            }
+            return person;
+        }
     }
 }
