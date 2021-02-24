@@ -99,5 +99,26 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
             }
             return person;
         }
+
+        public async Task<int> UpdatePersonAsync(PersonDTO person)
+        {
+            int id = 0;
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[SpUpdatePerson]";
+                    cmd.Parameters.AddWithValue("@PersonId", person.Id);
+                    cmd.Parameters.AddWithValue("@FullName", person.FullName);
+                    cmd.Parameters.AddWithValue("@PhoneNumber", person.PhoneNumber);
+                    cmd.Connection = connection;
+                    cmd.Connection.Open();
+                    var result = await cmd.ExecuteScalarAsync();
+                    id = Convert.ToInt32(result);
+                }
+            }
+            return id;
+        }
     }
 }

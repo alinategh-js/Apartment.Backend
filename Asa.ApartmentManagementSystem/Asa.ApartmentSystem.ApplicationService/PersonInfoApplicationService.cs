@@ -35,5 +35,11 @@ namespace Asa.ApartmentSystem.ApplicationService
         {
             return await _personManager.GetPersonByIdAsync(personId);
         }
+
+        public async Task<int> UpdatePersonAsync(int personId, string fullName, string phoneNumber)
+        {
+            var person = new PersonDTO { Id = personId, FullName = fullName, PhoneNumber = phoneNumber };
+            return await _personManager.UpdatePersonAsync(person);
+        }
     }
 }
