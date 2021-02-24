@@ -56,5 +56,24 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Stored Procedures\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\Unit_1.sql" />
+    <Build Include="dbo\Tables\PersonUnit_1.sql" />
+    <Build Include="dbo\Tables\Person_2.sql" />
+    <Build Include="dbo\Tables\Formula_1.sql" />
+    <Build Include="dbo\Tables\ExpenseCategory_1.sql" />
+    <Build Include="dbo\Tables\Expense_1.sql" />
+    <Build Include="dbo\Tables\Building_1.sql" />
+    <Build Include="dbo\Stored Procedures\SpInsertPerson_1.sql" />
+    <Build Include="dbo\Stored Procedures\SpInsertBuilding_1.sql" />
+    <Build Include="dbo\Stored Procedures\SpGetUnitById_1.sql" />
+    <Build Include="dbo\Stored Procedures\SpGetPersonUnitByPageAndType_1.sql" />
+    <Build Include="dbo\Stored Procedures\SpGetOnlyBuilding_1.sql" />
+    <Build Include="dbo\Stored Procedures\SpGetAllUnits_1.sql" />
+    <Build Include="dbo\Stored Procedures\SpGetAllPersonUnit_1.sql" />
   </ItemGroup>
 </Project>

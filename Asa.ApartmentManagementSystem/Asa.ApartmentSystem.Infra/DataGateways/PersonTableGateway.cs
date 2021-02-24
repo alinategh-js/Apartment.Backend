@@ -24,34 +24,33 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
         public async Task<IEnumerable<OwnerTenantInfoDto>> GetAllPeopleByPageAndTypeAsync(int page, int size, int isOwner)
         {
             var result = new List<OwnerTenantInfoDto>();
-            DataTable dataTable = new DataTable();
+            
             using (var connection = new SqlConnection(_connectionString))
             {
                 using (var cmd = new SqlCommand())
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.CommandText = "[dbo].[spGetPersonOwnerTenantByPageAndType]";
-                    cmd.Parameters.AddWithValue("@Page", page);
-                    cmd.Parameters.AddWithValue("@Size", size);
-                    cmd.Parameters.AddWithValue("@Owner", isOwner);
+                    cmd.CommandText = "[dbo].[SpGetPersonUnitByPageAndType]";
+                    cmd.Parameters.AddWithValue("@page", page);
+                    cmd.Parameters.AddWithValue("@size", size);
+                    cmd.Parameters.AddWithValue("@owner", isOwner);
                     cmd.Connection = connection;
                     cmd.Connection.Open();
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-                    dataAdapter.Fill(dataTable);
-                }
-            }
+                    using (var dataReader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await dataReader.ReadAsync())
+                        {
+                            var personUnit = new OwnerTenantInfoDto();
 
-            foreach (DataRow item in dataTable.Rows)
-            {
-                var people = new OwnerTenantInfoDto
-                {
-                    FullName = Convert.ToString(item["full_name"]),                    
-                    PersonId = Convert.ToInt32(item["id"]),
-                    PhoneNumber = Convert.ToString(item["phone_number"]),
-                    UnitId = Convert.ToInt32(item["unit_id"]),
-                    IsOwner = Convert.ToBoolean(item["is_owner"])
-                };
-                result.Add(people);
+                            personUnit.Id = dataReader.Extract<int>("PersonId");
+                            personUnit.FullName = dataReader.Extract<string>("FullName");
+                            personUnit.PhoneNumber = dataReader.Extract<string>("PhoneNumber");
+                            personUnit.UnitId = dataReader.Extract<int>("UnitId");
+                            personUnit.IsOwner = dataReader.Extract<bool>("IsOwner");
+                            result.Add(personUnit);
+                        }
+                    }
+                }
             }
             return result;
         }
