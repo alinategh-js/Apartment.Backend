@@ -41,5 +41,10 @@ namespace Asa.ApartmentSystem.ApplicationService
             var person = new PersonDTO { Id = personId, FullName = fullName, PhoneNumber = phoneNumber };
             return await _personManager.UpdatePersonAsync(person);
         }
+
+        public async Task DeletePersonByIdAsync(int personId)
+        {
+            await _personManager.DeletePersonByIdAsync(personId);
+        }
     }
 }

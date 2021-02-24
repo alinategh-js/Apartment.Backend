@@ -77,5 +77,11 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
             var tableGateway = _tableGatewayFactory.CreateIPersonTableGateway();
             return await tableGateway.UpdatePersonAsync(person);
         }
+
+        public async Task DeletePersonByIdAsync(int personId)
+        {
+            var tableGateway = _tableGatewayFactory.CreateIPersonTableGateway();
+            await tableGateway.DeletePersonByIdAsync(personId).ConfigureAwait(false);
+        }
     }
 }

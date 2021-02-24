@@ -77,5 +77,6 @@
     <Build Include="dbo\Stored Procedures\SpGetAllPersonUnit_1.sql" />
     <Build Include="dbo\Stored Procedures\SpGetPersonById.sql" />
     <Build Include="dbo\Stored Procedures\SpUpdatePerson.sql" />
+    <Build Include="dbo\Stored Procedures\SpDeletePersonById.sql" />
   </ItemGroup>
 </Project>

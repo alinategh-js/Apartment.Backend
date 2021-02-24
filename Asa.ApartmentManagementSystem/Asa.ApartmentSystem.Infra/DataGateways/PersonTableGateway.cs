@@ -120,5 +120,21 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
             }
             return id;
         }
+
+        public async Task DeletePersonByIdAsync(int personId)
+        {
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[SpDeletePersonById]";
+                    cmd.Parameters.AddWithValue("@PersonId", personId);
+                    cmd.Connection = connection;
+                    cmd.Connection.Open();
+                    var result = await cmd.ExecuteScalarAsync();
+                }
+            }
+        }
     }
 }
