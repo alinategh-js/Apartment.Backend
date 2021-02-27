@@ -90,7 +90,8 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
                     cmd.Connection.Open();
 
                     using (var dataReader = await cmd.ExecuteReaderAsync())
-                    { 
+                    {
+                        await dataReader.ReadAsync();
                         person.Id = dataReader.Extract<int>("PersonId");
                         person.FullName = dataReader.Extract<string>("FullName");
                         person.PhoneNumber = dataReader.Extract<string>("PhoneNumber");

@@ -82,5 +82,7 @@
     <Build Include="dbo\Stored Procedures\SpGetPersonById.sql" />
     <Build Include="dbo\Stored Procedures\SpUpdatePerson.sql" />
     <Build Include="dbo\Stored Procedures\SpDeletePersonById.sql" />
+    <Build Include="dbo\Stored Procedures\SpInsertUnit.sql" />
+    <Build Include="dbo\Stored Procedures\SpGetUnitsByPage.sql" />
   </ItemGroup>
 </Project>

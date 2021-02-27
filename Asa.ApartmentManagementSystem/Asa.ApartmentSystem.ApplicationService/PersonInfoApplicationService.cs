@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Asa.ApartmentSystem.ApplicationService
 {
-    class PersonInfoApplicationService
+    public class PersonInfoApplicationService
     {
         ITableGatwayFactory _tableGatewayFactory;
         PersonManager _personManager;

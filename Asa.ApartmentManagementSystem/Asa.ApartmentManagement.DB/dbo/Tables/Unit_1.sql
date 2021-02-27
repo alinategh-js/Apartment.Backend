@@ -4,6 +4,9 @@
     [Number]     INT            NOT NULL,
     [Area]       DECIMAL (5, 1) NOT NULL,
     PRIMARY KEY CLUSTERED ([UnitId] ASC),
-    CONSTRAINT [Fk_unit_building] FOREIGN KEY ([BuildingId]) REFERENCES [dbo].[Building] ([BuildingId])
+    CONSTRAINT [Fk_unit_building] FOREIGN KEY ([BuildingId]) REFERENCES [dbo].[Building] ([BuildingId]),
+    CONSTRAINT [UQ_Unit_Number] UNIQUE NONCLUSTERED ([Number] ASC)
 );
+
+
 

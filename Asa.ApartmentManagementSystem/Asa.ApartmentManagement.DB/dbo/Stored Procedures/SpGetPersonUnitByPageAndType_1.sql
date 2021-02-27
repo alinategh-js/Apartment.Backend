@@ -4,7 +4,7 @@
 @owner INT -- owner/resident ( filter )  ( 1: owner , 0: resident )
 AS
 BEGIN
-	SELECT p.PersonId as PersonId, p.FullName, p.PhoneNumber, pu.UnitId, pu.IsOwner
+	SELECT p.PersonId, p.FullName, p.PhoneNumber, pu.UnitId, pu.IsOwner
 	FROM 
 	(
 		select *
