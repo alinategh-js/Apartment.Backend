@@ -10,6 +10,9 @@ using System.Collections.Generic;
 using Asa.Draft.Domain;
 using Microsoft.EntityFrameworkCore;
 using ASa.ApartmentManagement.Core.ChargeCalculation.Domain.CalculationFormula;
+using Asa.ApartmentSystem.Infra.DataGateways;
+using System.Data.SqlClient;
+using ASa.ApartmentManagement.Core.BaseInfo.DTOs;
 
 namespace Asa.Draft
 {
@@ -35,9 +38,39 @@ namespace Asa.Draft
             //var task2 = Task.Run(DoMySecondJob);
             //await Task.WhenAll(task1, task2);
 
-            //var connectionString = ConfigurationManager.ConnectionStrings["AppartmentManagementCNX"].ConnectionString;
+            //var connectionString = ConfigurationManager.ConnectionStrings["ApartmentManagementCNX"].ConnectionString;
+            var connectionString = "Data Source=193.151.128.227,1433;Initial Catalog=AsaApartmentManagementDB;User ID=teamuser;Password=whiterose;";
+            //var connectionString = @"Data Source = PC08\Asa\SQLEXPRESS; Initial Catalog = Building; Integrated Security = True" ;
+            //var baseInfoService = new PersonInfoApplicationService(connectionString);
+            //var personDTO = await baseInfoService.GetPersonByIdAsync(21);
 
-            //var baseInfoService = new BaseInfoApplicationService(connectionString);
+            /*var person = new PersonDTO();
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[SpGetPersonById]";
+                    cmd.Parameters.AddWithValue("@personId", 21);
+                    cmd.Connection = connection;
+                    cmd.Connection.Open();
+
+                    using (var dataReader = await cmd.ExecuteReaderAsync())
+                    {
+                        await dataReader.ReadAsync();
+                        person.Id = dataReader.Extract<int>("PersonId");
+                        person.FullName = dataReader.Extract<string>("FullName");
+                        person.PhoneNumber = dataReader.Extract<string>("PhoneNumber");
+                    }
+                }
+            }
+
+            var name = person.FullName;*/
+
+            //var personTableGateway = new PersonTableGateway(connectionString);
+            //var person = await personTableGateway.GetPersonByIdAsync(21);
+            //Console.WriteLine(baseInfoService.GetPersonByIdAsync(21));
             //var units = await baseInfoService.GetAllOwnerTenantByUnitId(1);
 
 
