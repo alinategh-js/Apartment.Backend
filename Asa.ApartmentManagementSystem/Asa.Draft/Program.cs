@@ -35,11 +35,12 @@ namespace Asa.Draft
             //var task2 = Task.Run(DoMySecondJob);
             //await Task.WhenAll(task1, task2);
 
-            //var connectionString = ConfigurationManager.ConnectionStrings["AppartmentManagementCNX"].ConnectionString;
+            var connectionString = ConfigurationManager.ConnectionStrings["AppartmentManagementCNX"].ConnectionString;
 
-            //var baseInfoService = new BaseInfoApplicationService(connectionString);
-            //var units = await baseInfoService.GetAllOwnerTenantByUnitId(1);
-
+            var buildingInfoService = new BuildingInfoApplicationService(connectionString);
+            var units = await buildingInfoService.GetUnitsByPage(1, 2);
+            var unit = await buildingInfoService.GetUnit(4);
+            Console.WriteLine("debug");
 
 
             #region EF

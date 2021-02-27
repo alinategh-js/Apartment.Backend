@@ -52,5 +52,28 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
             return unit;
         }
 
+        public async Task<IEnumerable<UnitPersonDTO>> GetUnitsByPage(int page, int size)
+        {
+            IApartmentTableGateway tableGateway = _tablegatwayFactory.CreateIApartmentTableGateway();
+            IEnumerable<UnitPersonDTO> unitPersonDTOList = await tableGateway.GetUnitsByPageAsync(page, size).ConfigureAwait(false);
+            return unitPersonDTOList;
+        }
+
+        public async Task InsertUnitAsync(ApartmentUnitDTO apartmentUnitDTO)
+        {
+            //validations:
+            // 1: check if buildingId exists in the database or not
+            var buildingDTO = GetOnlyBuilding();
+            var buildingId = buildingDTO.Id;
+            if(buildingId != apartmentUnitDTO.Id)
+            {
+                throw new ValidationException(ErrorCodes.Building_Not_Found, "Building Id doesn't exist in the database.");
+            }
+
+            IApartmentTableGateway tableGateway = _tablegatwayFactory.CreateIApartmentTableGateway();
+            int unitId = await tableGateway.InsertUnitAsync(apartmentUnitDTO).ConfigureAwait(false);
+            apartmentUnitDTO.Id = unitId;
+        }
+
     }
 }

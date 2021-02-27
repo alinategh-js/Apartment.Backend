@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace Asa.ApartmentSystem.ApplicationService
 {
-    public class BaseInfoApplicationService
+    public class BuildingInfoApplicationService
     {
         ITableGatwayFactory tableGatewayFactory;
 
-        public BaseInfoApplicationService(string connectionString)
+        public BuildingInfoApplicationService(string connectionString)
         {
             tableGatewayFactory = new SqlTableGatewayFactory(connectionString);
         }
@@ -36,6 +36,20 @@ namespace Asa.ApartmentSystem.ApplicationService
         {
             BuildingManager buildingManager = new BuildingManager(tableGatewayFactory);
             return await buildingManager.GetUnitByIdAsync(unitId);
+        }
+
+        public async Task<IEnumerable<UnitPersonDTO>> GetUnitsByPage(int page, int size)
+        {
+            BuildingManager buildingManager = new BuildingManager(tableGatewayFactory);
+            return await buildingManager.GetUnitsByPage(page, size);
+        }
+
+        public async Task<int> InsertUnit(int buildingId, int unitNumber, decimal area)
+        {
+            BuildingManager buildingManager = new BuildingManager(tableGatewayFactory);
+            var unitDTO = new ApartmentUnitDTO { BuidlingId = buildingId, Number = unitNumber, Area = area };
+            await buildingManager.InsertUnitAsync(unitDTO);
+            return unitDTO.Id;
         }
     }
 }

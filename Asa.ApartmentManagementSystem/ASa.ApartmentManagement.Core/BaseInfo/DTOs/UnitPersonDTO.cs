@@ -10,6 +10,6 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.DTOs
         public int UnitNumber { get; set; }
         public string OwnerName { get; set; }
         public string ResidentName { get; set; }
-        public int Area { get; set; }
+        public decimal Area { get; set; }
     }
 }

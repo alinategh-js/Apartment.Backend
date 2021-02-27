@@ -13,7 +13,7 @@
     </RootPath>
     <RootNamespace>Asa.ApartmentManagement.DB</RootNamespace>
     <AssemblyName>Asa.ApartmentManagement.DB</AssemblyName>
-    <ModelCollation>1033, CI</ModelCollation>
+    <ModelCollation>1033,CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -22,6 +22,8 @@
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -56,5 +58,26 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Stored Procedures\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\Building.sql" />
+    <Build Include="dbo\Tables\PersonUnit.sql" />
+    <Build Include="dbo\Tables\Person.sql" />
+    <Build Include="dbo\Tables\Unit.sql" />
+    <Build Include="dbo\Tables\ExpenseCategory.sql" />
+    <Build Include="dbo\Tables\Expense.sql" />
+    <Build Include="dbo\Tables\Formula.sql" />
+    <Build Include="dbo\Stored Procedures\SpInsertBuilding.sql" />
+    <Build Include="dbo\Stored Procedures\SpGetAllPersonUnit.sql" />
+    <Build Include="dbo\Stored Procedures\SpGetAllUnits.sql" />
+    <Build Include="dbo\Stored Procedures\SpGetPersonUnitByPageAndType.sql" />
+    <Build Include="dbo\Stored Procedures\SpInsertPerson.sql" />
+    <Build Include="dbo\Stored Procedures\SpGetOnlyBuilding.sql" />
+    <Build Include="dbo\Stored Procedures\SpGetUnitById.sql" />
+    <Build Include="dbo\Stored Procedures\SpGetUnitsByPage.sql" />
+    <Build Include="dbo\Stored Procedures\SpInsertUnit.sql" />
   </ItemGroup>
 </Project>

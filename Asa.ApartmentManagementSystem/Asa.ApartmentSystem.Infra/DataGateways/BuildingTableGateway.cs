@@ -11,9 +11,9 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
     public class BuildingTableGateway : IBuildingTableGateway
     {
         string _connectionString;
-        public BuildingTableGateway(string connectionStrin)
+        public BuildingTableGateway(string connectionString)
         {            
-            _connectionString = connectionStrin;
+            _connectionString = connectionString;
         }
 
         public async Task<int> InsertBuildingAsync(BuildingDTO building)
@@ -36,7 +36,7 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
             return id;
         }
 
-        public async Task<BuildingDTO> GetOnlyBuildingAsync()  // in progress : write sp first
+        public async Task<BuildingDTO> GetOnlyBuildingAsync() 
         {
             var buildingDTO = new BuildingDTO();
 
@@ -45,17 +45,16 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
                 using (var cmd = new SqlCommand())
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.CommandText = "[dbo].[spGetOnlyBuilding]";
+                    cmd.CommandText = "[dbo].[SpGetOnlyBuilding]";
                     cmd.Connection = connection;
                     cmd.Connection.Open();
                     using (var dataReader = await cmd.ExecuteReaderAsync())
                     {
-                        
-                        //[Id],[name] ,[number_of_units]
-                        
-                        buildingDTO.Id = dataReader.Extract<int>("id");//== unitDTO.BuidlingId = Extensions.Extract<int>(dataReader,"building_id");
-                        buildingDTO.Name = dataReader.Extract<string>("name");
-                        buildingDTO.NumberOfUnits = dataReader.Extract<int>("number_of_units");
+                        await dataReader.ReadAsync();
+
+                        buildingDTO.Id = dataReader.Extract<int>("BuildingId");
+                        buildingDTO.Name = dataReader.Extract<string>("Name");
+                        buildingDTO.NumberOfUnits = dataReader.Extract<int>("NumberOfUnits");
                     }
                 }
             }
