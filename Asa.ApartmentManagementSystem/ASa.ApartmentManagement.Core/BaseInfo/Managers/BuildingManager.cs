@@ -20,6 +20,12 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
         
         public async Task AddBuilding(BuildingDTO building)
         {
+
+            var buildingDTO = await GetOnlyBuilding();
+            if(buildingDTO == null)
+            {
+                throw new ValidationException(ErrorCodes.Building_Already_Exists, $"Building already exists in the database.");
+            }
             const int MAX_BUILDING_NAME_LENGTH = 50;
             var buildingNameIsValid = string.IsNullOrWhiteSpace(building.Name) || building.Name.Length > MAX_BUILDING_NAME_LENGTH;
             if (buildingNameIsValid)
@@ -63,9 +69,9 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
         {
             //validations:
             // 1: check if buildingId exists in the database or not
-            var buildingDTO = GetOnlyBuilding();
+            var buildingDTO = await GetOnlyBuilding();
             var buildingId = buildingDTO.Id;
-            if(buildingId != apartmentUnitDTO.Id)
+            if (buildingId != apartmentUnitDTO.BuildingId)
             {
                 throw new ValidationException(ErrorCodes.Building_Not_Found, "Building Id doesn't exist in the database.");
             }
@@ -75,5 +81,14 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
             apartmentUnitDTO.Id = unitId;
         }
 
+        public async Task<int> GetCountOfUnitPerson()
+        {
+            IApartmentTableGateway tableGateway = _tablegatwayFactory.CreateIApartmentTableGateway();
+            int count = await tableGateway.GetCountOfUnitPersonAsync().ConfigureAwait(false);
+            return count;
+        }
+
+
+       
     }
 }

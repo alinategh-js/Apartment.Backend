@@ -11,5 +11,6 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.DataGateways
         Task<ApartmentUnitDTO> GetUnitByIdAsync(int unitId);
         Task<IEnumerable<UnitPersonDTO>> GetUnitsByPageAsync(int page, int size);
         Task<int> InsertUnitAsync(ApartmentUnitDTO apartmentUnit);
+        Task<int> GetCountOfUnitPersonAsync();
     }
 }

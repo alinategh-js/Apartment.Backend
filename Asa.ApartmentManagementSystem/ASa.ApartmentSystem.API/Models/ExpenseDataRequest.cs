@@ -1,13 +1,12 @@
-﻿using ASa.ApartmentManagement.Core.Common;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace ASa.ApartmentManagement.Core.BaseInfo.DTOs
+namespace Asa.ApartmentSystem.API.Models
 {
-    public class ExpenseDTO
+    public class ExpenseDataRequest
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public int CategoryId { get; set; }
         public DateTime From { get; set; }

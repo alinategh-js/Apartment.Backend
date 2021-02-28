@@ -24,9 +24,6 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
             throw new NotImplementedException();
         }
 
-        public IExpenseTableGateway CreateIExpenseTableGateway()
-        {
-            throw new NotImplementedException();
-        }
+        public IExpenseTableGateway CreateIExpenseTableGateway() => new ExpenseTableGateway(_connectionString);
     }
 }

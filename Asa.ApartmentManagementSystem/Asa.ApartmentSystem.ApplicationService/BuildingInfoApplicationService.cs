@@ -47,9 +47,15 @@ namespace Asa.ApartmentSystem.ApplicationService
         public async Task<int> InsertUnit(int buildingId, int unitNumber, decimal area)
         {
             BuildingManager buildingManager = new BuildingManager(tableGatewayFactory);
-            var unitDTO = new ApartmentUnitDTO { BuidlingId = buildingId, Number = unitNumber, Area = area };
+            var unitDTO = new ApartmentUnitDTO { BuildingId = buildingId, Number = unitNumber, Area = area };
             await buildingManager.InsertUnitAsync(unitDTO);
             return unitDTO.Id;
+        }
+
+        public async Task<int> GetCountOfUnitPerson()
+        {
+            BuildingManager buildingManager = new BuildingManager(tableGatewayFactory);
+            return await buildingManager.GetCountOfUnitPerson();
         }
     }
 }

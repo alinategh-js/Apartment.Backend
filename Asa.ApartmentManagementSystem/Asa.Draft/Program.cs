@@ -74,9 +74,13 @@ namespace Asa.Draft
             //var units = await baseInfoService.GetAllOwnerTenantByUnitId(1);
 
             var buildingInfoService = new BuildingInfoApplicationService(connectionString);
-            var units = await buildingInfoService.GetUnitsByPage(1, 2);
-            var unit = await buildingInfoService.GetUnit(4);
-            Console.WriteLine("debug");
+            //var units = await buildingInfoService.GetUnitsByPage(1, 2);
+            //var unit = await buildingInfoService.GetUnit(4);
+            //var buildingDTO = await buildingInfoService.GetFirstBuilding();
+            //int id = buildingDTO.Id;
+
+            int id = await buildingInfoService.InsertUnit(3, 10, 150);
+            Console.WriteLine(id);
 
 
             #region EF

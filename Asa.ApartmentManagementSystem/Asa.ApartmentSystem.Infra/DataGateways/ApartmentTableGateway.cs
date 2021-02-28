@@ -41,7 +41,7 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
                             
                             var unitDTO = new ApartmentUnitDTO();
 
-                            unitDTO.BuidlingId = dataReader.Extract<int>("BuildingId");
+                            unitDTO.BuildingId = dataReader.Extract<int>("BuildingId");
                             unitDTO.Id = dataReader.Extract<int>("UnitId");
                             unitDTO.Number = dataReader.Extract<int>("Number");
                             unitDTO.Area = dataReader.Extract<decimal>("Area");
@@ -73,7 +73,7 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
                         await dataReader.ReadAsync();
                         
                         unitDTO.Id = dataReader.Extract<int>("UnitId");
-                        unitDTO.BuidlingId = dataReader.Extract<int>("BuildingId");
+                        unitDTO.BuildingId = dataReader.Extract<int>("BuildingId");
                         unitDTO.Number = dataReader.Extract<int>("Number");
                         unitDTO.Area = dataReader.Extract<decimal>("Area");
                     }
@@ -126,7 +126,7 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.CommandText = "[dbo].[SpInsertUnit]";
-                    cmd.Parameters.AddWithValue("buildingId", apartmentUnit.BuidlingId);
+                    cmd.Parameters.AddWithValue("buildingId", apartmentUnit.BuildingId);
                     cmd.Parameters.AddWithValue("unitNumber", apartmentUnit.Number);
                     cmd.Parameters.AddWithValue("area", apartmentUnit.Area);
                     cmd.Connection = connection;
@@ -136,6 +136,26 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
                 }
             }
             return id;
+        }
+
+        public async Task<int> GetCountOfUnitPersonAsync()
+        {
+            int count = 0;
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using(var cmd = new SqlCommand())
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[SpGetCountOfUnitPerson]";
+                    cmd.Connection = connection;
+                    cmd.Connection.Open();
+
+                    var result = await cmd.ExecuteScalarAsync();
+                    count = Convert.ToInt32(result);
+                }
+            }
+            return count;
         }
     }
 }
