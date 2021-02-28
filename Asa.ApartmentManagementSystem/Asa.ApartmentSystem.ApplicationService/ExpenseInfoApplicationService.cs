@@ -26,9 +26,9 @@ namespace Asa.ApartmentSystem.ApplicationService
             return await _expenseManager.GetAllExpenseTypesByPageAsync(page, size);
         }
 
-        public async Task<int> CreateExpenseTypeAsync(string name, int formulaType)
+        public async Task<int> CreateExpenseTypeAsync(string name, FormulaType formulaType)
         {
-            var expenseType = new ExpenseTypeDTO { Name = name, Formula = (FormulaType) formulaType };
+            var expenseType = new ExpenseTypeDTO { Name = name, Formula = formulaType };
             return await _expenseManager.CreateExpenseTypeAsync(expenseType);
         }
 
