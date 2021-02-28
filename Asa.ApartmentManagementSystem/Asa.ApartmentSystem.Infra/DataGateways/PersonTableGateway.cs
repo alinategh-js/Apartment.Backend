@@ -154,7 +154,7 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
                     cmd.Parameters.AddWithValue("@PersonId", personId);
                     cmd.Connection = connection;
                     cmd.Connection.Open();
-                    var result = await cmd.ExecuteScalarAsync();
+                    await cmd.ExecuteScalarAsync();
                 }
             }
         }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ASa.ApartmentManagement.Core.BaseInfo.DTOs
 {
-    public class ExpenseCategoryDTO
+    public class ExpenseTypeDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -17,7 +17,7 @@ namespace Asa.ApartmentSystem.Core.Test.MyFakes
             throw new NotImplementedException();
         }
 
-        public IExpenseCategoryTableGateway CreateIExpenseCategoryTableGateway()
+        public IExpenseTypeTableGateway CreateIExpenseTypeTableGateway()
         {
             throw new NotImplementedException();
         }
