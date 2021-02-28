@@ -13,5 +13,6 @@ namespace ASa.ApartmentManagement.Core.Common
         public const int Invalid_Person_Phone_Number = 1003;
         public const int Building_Not_Found = 1004;
         public const int Building_Already_Exists = 1005;
+        public const int Person_Not_Found = 1005;
     }
 }

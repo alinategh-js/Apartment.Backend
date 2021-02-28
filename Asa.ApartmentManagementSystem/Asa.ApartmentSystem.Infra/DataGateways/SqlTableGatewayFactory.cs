@@ -19,7 +19,7 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
 
         public IPersonTableGateway CreateIPersonTableGateway() => new PersonTableGateway(_connectionString);
 
-        public IExpenseCategoryTableGateway CreateIExpenseCategoryTableGateway()
+        public IExpenseTypeTableGateway CreateIExpenseTypeTableGateway()
         {
             throw new NotImplementedException();
         }

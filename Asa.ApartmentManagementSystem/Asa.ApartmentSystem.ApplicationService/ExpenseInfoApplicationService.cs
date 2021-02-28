@@ -2,6 +2,7 @@
 using ASa.ApartmentManagement.Core.BaseInfo.DataGateways;
 using ASa.ApartmentManagement.Core.BaseInfo.DTOs;
 using ASa.ApartmentManagement.Core.BaseInfo.Managers;
+using ASa.ApartmentManagement.Core.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,36 +12,50 @@ namespace Asa.ApartmentSystem.ApplicationService
 {
     public class ExpenseInfoApplicationService
     {
-        ITableGatwayFactory tableGatewayFactory;
+        ITableGatwayFactory _tableGatewayFactory;
+        ExpenseManager _expenseManager;
 
         public ExpenseInfoApplicationService(string connectionString)
         {
-            tableGatewayFactory = new SqlTableGatewayFactory(connectionString);
+            _tableGatewayFactory = new SqlTableGatewayFactory(connectionString);
+            _expenseManager = new ExpenseManager(_tableGatewayFactory);
         }
 
         public async Task<IEnumerable<ExpenseDTO>> GetExpensesByPageAsync(int page, int size)
         {
-            ExpenseManager expenseManager = new ExpenseManager(tableGatewayFactory);
-            return await expenseManager.GetExpensesByPageAsync(page, size);
+            return await _expenseManager.GetExpensesByPageAsync(page, size);
         }
 
         public async Task<int> InsertExpenseAsync(ExpenseDTO expenseDTO)
         {
-            ExpenseManager expenseManager = new ExpenseManager(tableGatewayFactory);
-            await expenseManager.InsertExpenseAsync(expenseDTO);
+            await _expenseManager.InsertExpenseAsync(expenseDTO);
             return expenseDTO.Id;
         }
 
         public async Task DeleteExpenseById(int expenseId)
         {
-            ExpenseManager expenseManager = new ExpenseManager(tableGatewayFactory);
-            await expenseManager.DeleteExpenseByIdAsync(expenseId);
+            await _expenseManager.DeleteExpenseByIdAsync(expenseId);
         }
 
         public async Task<int> GetCountOfExpenses()
         {
-            ExpenseManager expenseManager = new ExpenseManager(tableGatewayFactory);
-            return await expenseManager.GetCountOfExpensesAsync();
+            return await _expenseManager.GetCountOfExpensesAsync();
+        }
+
+        public async Task<IEnumerable<ExpenseTypeDTO>> GetAllExpenseTypesByPageAsync(int page, int size)
+        {
+            return await _expenseManager.GetAllExpenseTypesByPageAsync(page, size);
+        }
+
+        public async Task<int> CreateExpenseTypeAsync(string name, FormulaType formulaType)
+        {
+            var expenseType = new ExpenseTypeDTO { Name = name, Formula = formulaType };
+            return await _expenseManager.CreateExpenseTypeAsync(expenseType);
+        }
+
+        public async Task DeleteExpenseTypeByIdAsync(int expenseTypeId)
+        {
+            await _expenseManager.DeleteExpenseTypeByIdAsync(expenseTypeId);
         }
     }
 }

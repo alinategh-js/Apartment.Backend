@@ -8,7 +8,8 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.DataGateways
 {
     public interface IPersonTableGateway
     {
-        Task<IEnumerable<OwnerTenantInfoDto>> GetAllPeopleByPageAndTypeAsync(int page, int size, int isOwner);
+        Task<IEnumerable<OwnerResidentDTO>> GetAllPeopleByPageAndTypeAsync(int page, int size, int isOwner);
+        Task<int> GetTotalCountOfPeopleAsync();
         Task<int> InsertPersonAsync(PersonDTO person); 
         Task<PersonDTO> GetPersonByIdAsync(int personId);
         Task<int> UpdatePersonAsync(PersonDTO person);

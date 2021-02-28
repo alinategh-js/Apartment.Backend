@@ -73,14 +73,27 @@ namespace Asa.Draft
             //Console.WriteLine(baseInfoService.GetPersonByIdAsync(21));
             //var units = await baseInfoService.GetAllOwnerTenantByUnitId(1);
 
-            var buildingInfoService = new BuildingInfoApplicationService(connectionString);
-            //var units = await buildingInfoService.GetUnitsByPage(1, 2);
-            //var unit = await buildingInfoService.GetUnit(4);
-            //var buildingDTO = await buildingInfoService.GetFirstBuilding();
-            //int id = buildingDTO.Id;
+            /*var buildingInfoService = new BuildingInfoApplicationService(connectionString);
+            var units = await buildingInfoService.GetUnitsByPage(1, 2);
+            var unit = await buildingInfoService.GetUnit(4);
+            Console.WriteLine("debug");*/
 
-            int id = await buildingInfoService.InsertUnit(3, 10, 150);
-            Console.WriteLine(id);
+            int count = 0;
+
+            using (var connection = new SqlConnection(connectionString))
+            {
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[SpGetTotalCountOfPersonUnit]";
+                    cmd.Connection = connection;
+                    cmd.Connection.Open();
+                    var result = await cmd.ExecuteScalarAsync();
+                    count = Convert.ToInt32(result);
+                }
+            }
+
+            Console.WriteLine(count); 
 
 
             #region EF

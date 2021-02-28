@@ -20,9 +20,14 @@ namespace Asa.ApartmentSystem.ApplicationService
             _personManager = new PersonManager(_tableGatewayFactory);
         }
 
-        public async Task<IEnumerable<OwnerTenantInfoDto>> GetAllPeopleByPageAndType(int page, int size, int isOwner)
+        public async Task<IEnumerable<OwnerResidentDTO>> GetAllPeopleByPageAndType(int page, int size, int isOwner)
         {
             return await _personManager.GetAllPeopleByPageAndTypeAsync(page, size, isOwner);
+        }
+
+        public async Task<int> GetTotalCountOfPeopleAsync()
+        {
+            return await _personManager.GetTotalCountOfPeopleAsync();
         }
 
         public async Task<int> CreatePersonAsync(string fullName, string phoneNumber)
