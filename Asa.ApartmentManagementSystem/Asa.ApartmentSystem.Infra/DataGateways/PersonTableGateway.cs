@@ -21,16 +21,16 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
         }
 
-        public async Task<IEnumerable<OwnerTenantInfoDto>> GetAllPeopleByPageAndTypeAsync(int page, int size, int isOwner)
+        public async Task<IEnumerable<OwnerResidentDTO>> GetAllPeopleByPageAndTypeAsync(int page, int size, int isOwner)
         {
-            var result = new List<OwnerTenantInfoDto>();
+            var result = new List<OwnerResidentDTO>();
             
             using (var connection = new SqlConnection(_connectionString))
             {
                 using (var cmd = new SqlCommand())
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.CommandText = "[dbo].[SpGetPersonUnitByPageAndType]";
+                    cmd.CommandText = "[dbo].[SpGetOwnerResidentByPageAndType]";
                     cmd.Parameters.AddWithValue("@page", page);
                     cmd.Parameters.AddWithValue("@size", size);
                     cmd.Parameters.AddWithValue("@owner", isOwner);
@@ -40,19 +40,40 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
                     {
                         while (await dataReader.ReadAsync())
                         {
-                            var personUnit = new OwnerTenantInfoDto();
+                            var ownerResident = new OwnerResidentDTO();
 
-                            personUnit.Id = dataReader.Extract<int>("PersonId");
-                            personUnit.FullName = dataReader.Extract<string>("FullName");
-                            personUnit.PhoneNumber = dataReader.Extract<string>("PhoneNumber");
-                            personUnit.UnitId = dataReader.Extract<int>("UnitId");
-                            personUnit.IsOwner = dataReader.Extract<bool>("IsOwner");
-                            result.Add(personUnit);
+                            ownerResident.PersonId = dataReader.Extract<int>("PersonId");
+                            ownerResident.FullName = dataReader.Extract<string>("FullName");
+                            ownerResident.PhoneNumber = dataReader.Extract<string>("PhoneNumber");
+                            ownerResident.UnitId = dataReader.Extract<int>("UnitId");
+                            ownerResident.UnitNumber = dataReader.Extract<int>("UnitNumber");
+                            ownerResident.IsOwner = dataReader.Extract<bool>("IsOwner");
+                            result.Add(ownerResident);
                         }
                     }
                 }
             }
             return result;
+        }
+
+        public async Task<int> GetTotalCountOfPeopleAsync()
+        {
+            int count = 0;
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[SpGetTotalCountOfPersonUnit]";
+                    cmd.Connection = connection;
+                    cmd.Connection.Open();
+                    var result = await cmd.ExecuteScalarAsync();
+                    count = Convert.ToInt32(result);
+                }
+            }
+
+            return count;
         }
 
         public async Task<int> InsertPersonAsync(PersonDTO person)

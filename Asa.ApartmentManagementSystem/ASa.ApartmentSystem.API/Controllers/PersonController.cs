@@ -37,9 +37,11 @@ namespace Asa.ApartmentSystem.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<People>>> GetPeople(int page, int size, int isOwner)
+        public async Task<ActionResult<IEnumerable<People>>> GetPeople([FromBody] PeopleRequest req)
         {
-            var peopleList = await _service.GetAllPeopleByPageAndType(page, size, isOwner);
+            var peopleList = await _service.GetAllPeopleByPageAndType(req.Page, req.Size, req.IsOwner);
+            var totalCount = await _service.GetTotalCountOfPeopleAsync();
+            var totalPages = totalCount / req.Size;
 
             if (peopleList == null)
             {
@@ -56,6 +58,7 @@ namespace Asa.ApartmentSystem.API.Controllers
                 personInPeople.UnitId = person.UnitId;
                 personInPeople.FullName = person.FullName;
                 personInPeople.PhoneNumber = person.PhoneNumber;
+                personInPeople.UnitNumber = person.UnitNumber;
                 personInPeople.IsOwner = person.IsOwner;
 
                 people.Add(personInPeople);
@@ -65,17 +68,15 @@ namespace Asa.ApartmentSystem.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> Post([FromBody] string fullName, [FromBody] string phoneNumber)
+        public async Task<ActionResult<int>> Post([FromBody] Person person)
         {
-            return await _service.CreatePersonAsync(fullName, phoneNumber);
+            return await _service.CreatePersonAsync(person.FullName, person.PhoneNumber);
         }
 
         [HttpPut]
-        public async Task<ActionResult<int>> Put([FromRoute] int personId,
-                                                 [FromBody] string fullName,
-                                                 [FromBody] string phoneNumber)
+        public async Task<ActionResult<int>> Put([FromBody] Person person)
         {
-            return await _service.UpdatePersonAsync(personId, fullName, phoneNumber);
+            return await _service.UpdatePersonAsync(person.Id, person.FullName, person.PhoneNumber);
         }
 
         [HttpDelete]

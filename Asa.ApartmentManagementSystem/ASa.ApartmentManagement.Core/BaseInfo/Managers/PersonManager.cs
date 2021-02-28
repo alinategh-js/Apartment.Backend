@@ -15,10 +15,16 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
             _tableGatewayFactory = tableGatwayFactory;
         }
 
-        public async Task<IEnumerable<OwnerTenantInfoDto>> GetAllPeopleByPageAndTypeAsync(int page, int size, int isOwner)
+        public async Task<IEnumerable<OwnerResidentDTO>> GetAllPeopleByPageAndTypeAsync(int page, int size, int isOwner)
         {
             var tableGateway = _tableGatewayFactory.CreateIPersonTableGateway();
             return await tableGateway.GetAllPeopleByPageAndTypeAsync(page, size, isOwner).ConfigureAwait(false);
+        }
+
+        public async Task<int> GetTotalCountOfPeopleAsync()
+        {
+            var tableGateway = _tableGatewayFactory.CreateIPersonTableGateway();
+            return await tableGateway.GetTotalCountOfPeopleAsync();
         }
 
         public async Task<int> CreatePersonAsync(PersonDTO person)

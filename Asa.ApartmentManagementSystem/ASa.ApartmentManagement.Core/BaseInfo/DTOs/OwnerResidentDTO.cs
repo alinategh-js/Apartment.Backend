@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace Asa.ApartmentSystem.API.Models
+namespace ASa.ApartmentManagement.Core.BaseInfo.DTOs
 {
-    public class People
+    public class OwnerResidentDTO
     {
         public int PersonId { get; set; }
         public int UnitId { get; set; }
