@@ -8,8 +8,8 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.DataGateways
 {
     public interface IExpenseTypeTableGateway
     {
-        Task<IEnumerable<ExpenseTypeDTO>> GetAllExpenseTypesByPage(int page, int size);
-        Task<int> InsertExpenseType(ExpenseTypeDTO expenseType);
-        Task DeleteExpenseTypeById(int typeId);
+        Task<IEnumerable<ExpenseTypeDTO>> GetAllExpenseTypesByPageAsync(int page, int size);
+        Task<int> InsertExpenseTypeAsync(ExpenseTypeDTO expenseType);
+        Task DeleteExpenseTypeByIdAsync(int typeId);
     }
 }

@@ -18,7 +18,7 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
         }
 
-        public async Task<IEnumerable<ExpenseTypeDTO>> GetAllExpenseTypesByPage(int page, int size)
+        public async Task<IEnumerable<ExpenseTypeDTO>> GetAllExpenseTypesByPageAsync(int page, int size)
         {
             var result = new List<ExpenseTypeDTO>();
 
@@ -50,7 +50,7 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
             return result;
         }
 
-        public async Task<int> InsertExpenseType(ExpenseTypeDTO expenseType)
+        public async Task<int> InsertExpenseTypeAsync(ExpenseTypeDTO expenseType)
         {
             int id = 0;
             using (var connection = new SqlConnection(_connectionString))
@@ -70,7 +70,7 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
             return id;
         }
 
-        public async Task DeleteExpenseTypeById(int typeId)
+        public async Task DeleteExpenseTypeByIdAsync(int typeId)
         {
             using (var connection = new SqlConnection(_connectionString))
             {
