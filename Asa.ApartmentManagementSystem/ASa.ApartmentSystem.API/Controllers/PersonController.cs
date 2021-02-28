@@ -69,5 +69,19 @@ namespace Asa.ApartmentSystem.API.Controllers
         {
             return await _service.CreatePersonAsync(fullName, phoneNumber);
         }
+
+        [HttpPut]
+        public async Task<ActionResult<int>> Put([FromRoute] int personId,
+                                                 [FromBody] string fullName,
+                                                 [FromBody] string phoneNumber)
+        {
+            return await _service.UpdatePersonAsync(personId, fullName, phoneNumber);
+        }
+
+        [HttpDelete]
+        public async Task Delete([FromRoute] int personId)
+        {
+            await _service.DeletePersonByIdAsync(personId);
+        }
     }
 }
