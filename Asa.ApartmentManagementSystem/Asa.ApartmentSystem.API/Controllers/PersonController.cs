@@ -35,5 +35,33 @@ namespace Asa.ApartmentSystem.API.Controllers
             var person = new Person { Id = personDTO.Id, FullName = personDTO.FullName, PhoneNumber = personDTO.PhoneNumber };
             return person;
         }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<People>>> GetPeople(int page, int size, int isOwner)
+        {
+            var peopleList = await _service.GetAllPeopleByPageAndType(page, size, isOwner);
+
+            if (peopleList == null)
+            {
+                return NotFound("No people to show.");
+            }
+
+            var people = new List<People>();
+
+            foreach (var person in peopleList)
+            {
+                var personInPeople = new People();
+
+                personInPeople.PersonId = person.PersonId;
+                personInPeople.UnitId = person.UnitId;
+                personInPeople.FullName = person.FullName;
+                personInPeople.PhoneNumber = person.PhoneNumber;
+                personInPeople.IsOwner = person.IsOwner;
+
+                people.Add(personInPeople);
+            }
+
+            return people;
+        }
     }
 }
