@@ -73,13 +73,13 @@ namespace Asa.ApartmentSystem.API.Controllers
             return await _service.CreatePersonAsync(person.FullName, person.PhoneNumber);
         }
 
-        [HttpPut]
-        public async Task<ActionResult<int>> Put([FromBody] Person person)
+        [HttpPut("{personId}")]
+        public async Task<ActionResult<int>> Put([FromRoute] int personId, [FromBody] Person person)
         {
-            return await _service.UpdatePersonAsync(person.Id, person.FullName, person.PhoneNumber);
+            return await _service.UpdatePersonAsync(personId, person.FullName, person.PhoneNumber);
         }
 
-        [HttpDelete]
+        [HttpDelete("{personId}")]
         public async Task Delete([FromRoute] int personId)
         {
             await _service.DeletePersonByIdAsync(personId);

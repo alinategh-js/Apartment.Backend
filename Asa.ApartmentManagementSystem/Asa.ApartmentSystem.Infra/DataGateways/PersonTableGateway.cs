@@ -84,9 +84,9 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
                 using (var cmd = new SqlCommand())
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
-                    cmd.CommandText = "[dbo].[SpPersonCreate]";
-                    cmd.Parameters.AddWithValue("@Name", person.FullName);
-                    cmd.Parameters.AddWithValue("@NumberOfUnits", person.PhoneNumber);
+                    cmd.CommandText = "[dbo].[SpInsertPerson]";
+                    cmd.Parameters.AddWithValue("@FullName", person.FullName);
+                    cmd.Parameters.AddWithValue("@PhoneNumber", person.PhoneNumber);
                     cmd.Connection = connection;
                     cmd.Connection.Open();
                     var result = await cmd.ExecuteScalarAsync();
