@@ -32,7 +32,6 @@ bld/
 [Ll]ogs/
 
 Asa.ApartmentManagement.DB/
-*.config
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
