@@ -1,5 +1,8 @@
-﻿using ASa.ApartmentManagement.Core.ChargeCalculation.Domain;
+﻿using ASa.ApartmentManagement.Core;
+using ASa.ApartmentManagement.Core.ChargeCalculation.Domain;
 using ASa.ApartmentManagement.Core.ChargeCalculation.Repositories;
+using ASa.ApartmentManagement.Core.ManageOwnership.Domain;
+using ASa.ApartmentManagement.Core.ManageOwnership.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,11 +26,14 @@ namespace Asa.ApartmentSystem.Infra.Repositories
         public DbSet<Building> Buildings { get; set; }
         public DbSet<Charge> Charges { get; set; }
         public DbSet<Expens> Expenses { get; set; }
+        public DbSet<UnitPerson> UnitPeople { get; set; }
 
         public IBuildingRepository BuildingRepository => new EfBuildingRepository(this);
 
         public IExpensRepository ExpensRepository => new EfExpensRepository(this);
 
         public IChargeRepository ChargeRepository => new EfChargeRepository(this);
+
+        public IUnitPersonRepository UnitPersonRepository => new EfUnitPersonRepository(this);
     }
 }

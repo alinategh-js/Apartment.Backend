@@ -1,4 +1,4 @@
-﻿using ASa.ApartmentManagement.Core.ChargeCalculation.Repositories;
+﻿using ASa.ApartmentManagement.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
