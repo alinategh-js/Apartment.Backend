@@ -48,6 +48,12 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
             return await tableGateway.GetAllExpenseTypesByPageAsync(page, size);
         }
 
+        public async Task<int> GetTotalCountOfExpenseTypesAsync()
+        {
+            var tableGateway = _tablegatwayFactory.CreateIExpenseTypeTableGateway();
+            return await tableGateway.GetTotalCountOfExpenseTypes();
+        }
+
         public async Task<int> CreateExpenseTypeAsync(ExpenseTypeDTO expenseType)
         {
             const int MAX_EXPENSE_TYPE_NAME_LENGTH = 50;
