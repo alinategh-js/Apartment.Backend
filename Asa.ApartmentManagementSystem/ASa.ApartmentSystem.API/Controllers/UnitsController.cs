@@ -23,10 +23,8 @@ namespace Asa.ApartmentSystem.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UnitPerson>>> GetUnitsByPage([FromBody] UnitPersonRequest data)
+        public async Task<ActionResult<IEnumerable<UnitPerson>>> GetUnitsByPage([FromQuery] int page, [FromQuery] int size)
         {
-            int page = data.Page;
-            int size = data.Size;
             var unitPersonDTOList = await _service.GetUnitsByPage(page, size);
             // we then need to know how many pages exists, we get the count of all the records and calculate total pages:
             var totalPages = await _service.GetCountOfUnitPerson() / size;
