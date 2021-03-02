@@ -158,5 +158,34 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
                 }
             }
         }
+
+        public async Task<IEnumerable<PersonDTO>> GetAllPeople()
+        {
+            var result = new List<PersonDTO>();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using(var cmd = new SqlCommand())
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[SpGetAllPeople]";
+                    cmd.Connection = connection;
+                    cmd.Connection.Open();
+
+                    using (var dataReader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await dataReader.ReadAsync())
+                        {
+                            var person = new PersonDTO();
+
+                            person.Id = dataReader.Extract<int>("PersonId");
+                            person.FullName = dataReader.Extract<string>("FullName");
+                            person.PhoneNumber = dataReader.Extract<string>("PhoneNumber");
+                            result.Add(person);
+                        }
+                    }
+                }
+            }
+            return result;
+        }
     }
 }

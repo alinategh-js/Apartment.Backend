@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using Asa.ApartmentSystem.ApplicationService;
 using Asa.ApartmentSystem.API.Models;
 using System.Configuration;
+using Microsoft.AspNetCore.Cors;
 
 namespace Asa.ApartmentSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("React")]
     public class PersonController : ControllerBase
     {
         private readonly PersonInfoApplicationService _service;
@@ -36,8 +38,26 @@ namespace Asa.ApartmentSystem.API.Controllers
             return person;
         }
 
+        [HttpPut]
+        public async Task<ActionResult<IEnumerable<PeopleAll>>> GetAllPeople()
+        {
+            var peopleDTOList = await _service.GetAllPeople();
+            var allPeople = new List<PeopleAll>();
+            foreach (var person in peopleDTOList)
+            {
+                var personInPeople = new PeopleAll();
+                personInPeople.Id = person.Id;
+                personInPeople.FullName = person.FullName;
+                personInPeople.PhoneNumber = person.PhoneNumber;
+
+                allPeople.Add(personInPeople);
+            }
+
+            return allPeople;
+        }
+
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<People>>> GetPeople([FromBody] PeopleRequest req)
+        public async Task<ActionResult<IEnumerable<People>>> GetPeopleByPage([FromBody] PeopleRequest req)
         {
             var peopleList = await _service.GetAllPeopleByPageAndType(req.Page, req.Size, req.IsOwner);
             var totalCount = await _service.GetTotalCountOfPeopleAsync();

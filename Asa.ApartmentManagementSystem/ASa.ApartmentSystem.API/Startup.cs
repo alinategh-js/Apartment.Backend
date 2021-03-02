@@ -40,7 +40,7 @@ namespace Asa.ApartmentSystem.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors("React");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
