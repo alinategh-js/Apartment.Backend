@@ -20,13 +20,13 @@ namespace Asa.ApartmentSystem.ApplicationService.ManageOwnership
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
-                var unitPeople = await uow.UnitPersonRepository.GetUnitPeopleByUnitIdWhereToIsNullAsync(unitPerson.UnitId, unitPerson.IsOwner); // returns 2 results max : 1 which IsOwner = 1 , another which IsOwner = 0
+                var unitPeople = await uow.UnitPersonRepository.GetUnitPeopleByUnitIdWhereToIsNullAsync(unitPerson.UnitId, unitPerson.IsOwner); 
                 if(unitPeople == null) // no records exists
                 {
                     //insert new record
                     await uow.UnitPersonRepository.InsertUnitPersonAsync(unitPerson);
                 }
-                else // atleast one record exists
+                else 
                 {
 
                 }

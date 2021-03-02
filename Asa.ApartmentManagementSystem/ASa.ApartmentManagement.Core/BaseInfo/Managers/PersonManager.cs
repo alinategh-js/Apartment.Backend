@@ -15,6 +15,12 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
             _tableGatewayFactory = tableGatwayFactory;
         }
 
+        public async Task<IEnumerable<PersonDTO>> GetAllPeople()
+        {
+            var tableGateway = _tableGatewayFactory.CreateIPersonTableGateway();
+            return await tableGateway.GetAllPeople();
+        }
+
         public async Task<IEnumerable<OwnerResidentDTO>> GetAllPeopleByPageAndTypeAsync(int page, int size, int isOwner)
         {
             var tableGateway = _tableGatewayFactory.CreateIPersonTableGateway();
