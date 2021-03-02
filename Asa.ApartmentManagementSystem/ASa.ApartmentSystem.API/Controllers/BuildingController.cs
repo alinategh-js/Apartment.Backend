@@ -1,6 +1,7 @@
 ﻿using Asa.ApartmentSystem.API.Models;
 using Asa.ApartmentSystem.ApplicationService;
 using ASa.ApartmentManagement.Core.BaseInfo.DTOs;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System;
@@ -12,6 +13,7 @@ namespace Asa.ApartmentSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("React")]
     public class BuildingController : ControllerBase
     {
         private readonly BuildingInfoApplicationService _service;

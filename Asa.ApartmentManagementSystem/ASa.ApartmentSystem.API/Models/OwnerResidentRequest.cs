@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace Asa.ApartmentSystem.API.Models
 {
-    public class UnitPersonRequest
+    public class OwnerResidentRequest
     {
-        public int Page { get; set; }
-        public int Size { get; set; }
+        public int OwnerId { get; set; }
+        public int MyProperty { get; set; }
     }
 }

@@ -10,5 +10,6 @@ namespace Asa.ApartmentSystem.API.Models
         public int Page { get; set; }
         public int Size { get; set; }
         public int IsOwner { get; set; }
+        public bool GetAll { get; set; }
     }
 }

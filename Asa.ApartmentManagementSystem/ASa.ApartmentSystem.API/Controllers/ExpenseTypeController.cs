@@ -5,11 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Asa.ApartmentSystem.ApplicationService;
 using Asa.ApartmentSystem.API.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace Asa.ApartmentSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("React")]
     public class ExpenseTypeController : ControllerBase
     {
         private readonly ExpenseInfoApplicationService _service;

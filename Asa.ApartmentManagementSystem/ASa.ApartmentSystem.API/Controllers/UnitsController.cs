@@ -1,5 +1,6 @@
 ﻿using Asa.ApartmentSystem.API.Models;
 using Asa.ApartmentSystem.ApplicationService;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ namespace Asa.ApartmentSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("React")]
     public class UnitsController : ControllerBase
     {
         private readonly BuildingInfoApplicationService _service;
@@ -21,10 +23,8 @@ namespace Asa.ApartmentSystem.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UnitPerson>>> GetUnitsByPage([FromBody] UnitPersonRequest data)
+        public async Task<ActionResult<IEnumerable<UnitPerson>>> GetUnitsByPage([FromQuery] int page, [FromQuery] int size)
         {
-            int page = data.Page;
-            int size = data.Size;
             var unitPersonDTOList = await _service.GetUnitsByPage(page, size);
             // we then need to know how many pages exists, we get the count of all the records and calculate total pages:
             var totalPages = await _service.GetCountOfUnitPerson() / size;
@@ -44,5 +44,11 @@ namespace Asa.ApartmentSystem.API.Controllers
             int unitId = await _service.InsertUnit(unitData.BuildingId, unitData.Number, Convert.ToDecimal(unitData.Area));
             return unitId;
         }
+
+        //[HttpPut("{id}")]
+        //public async Task<ActionResult> SetUnitOwnerResident([FromBody] OwnerResidentRequest ownerResidentRequest)
+        //{
+
+        //}
     }
 }

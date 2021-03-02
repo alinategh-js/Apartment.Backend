@@ -1,6 +1,7 @@
 ﻿using Asa.ApartmentSystem.API.Models;
 using Asa.ApartmentSystem.ApplicationService;
 using ASa.ApartmentManagement.Core.BaseInfo.DTOs;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace Asa.ApartmentSystem.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("React")]
     public class ExpensesController : ControllerBase
     {
         private readonly ExpenseInfoApplicationService _service;
