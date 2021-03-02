@@ -50,6 +50,26 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
             return result;
         }
 
+        public async Task<int> GetTotalCountOfExpenseTypes()
+        {
+            int count = 0;
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[SpGetTotalCountOfExpenseTypes]";
+                    cmd.Connection = connection;
+                    cmd.Connection.Open();
+                    var result = await cmd.ExecuteScalarAsync();
+                    count = Convert.ToInt32(result);
+                }
+            }
+
+            return count;
+        }
+
         public async Task<int> InsertExpenseTypeAsync(ExpenseTypeDTO expenseType)
         {
             int id = 0;

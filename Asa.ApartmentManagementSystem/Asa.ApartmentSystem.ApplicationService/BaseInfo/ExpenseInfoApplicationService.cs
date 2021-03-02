@@ -47,6 +47,11 @@ namespace Asa.ApartmentSystem.ApplicationService
             return await _expenseManager.GetAllExpenseTypesByPageAsync(page, size);
         }
 
+        public async Task<int> GetTotalCountOfExpenseTypesAsync()
+        {
+            return await _expenseManager.GetTotalCountOfExpenseTypesAsync();
+        }
+
         public async Task<int> CreateExpenseTypeAsync(string name, FormulaType formulaType)
         {
             var expenseType = new ExpenseTypeDTO { Name = name, Formula = formulaType };
