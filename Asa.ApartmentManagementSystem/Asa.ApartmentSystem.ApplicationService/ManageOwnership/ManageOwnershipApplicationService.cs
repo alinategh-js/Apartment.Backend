@@ -1,4 +1,5 @@
-﻿using ASa.ApartmentManagement.Core;
+﻿using Asa.ApartmentSystem.Infra.Repositories;
+using ASa.ApartmentManagement.Core;
 using ASa.ApartmentManagement.Core.ManageOwnership.Domain;
 using System;
 using System.Collections.Generic;
@@ -9,18 +10,18 @@ namespace Asa.ApartmentSystem.ApplicationService.ManageOwnership
 {
     public class ManageOwnershipApplicationService
     {
-        IUnitOfWorkFactory _unitOfWorkFactory;
+        string _connectionString;
 
-        public ManageOwnershipApplicationService(IUnitOfWorkFactory unitOfWorkFactory)
+        public ManageOwnershipApplicationService(string connectionString)
         {
-            _unitOfWorkFactory = unitOfWorkFactory ?? throw new ArgumentNullException(nameof(unitOfWorkFactory));
+            _connectionString = connectionString;
         }
 
-        public async Task ManageOwnerResidentForUnit(UnitPerson unitPerson)
+        public async Task ManageOwnerResidentForUnit(PersonUnit unitPerson)
         {
-            using (var uow = _unitOfWorkFactory.Create())
+            using (var apartmentDb = new ApartmentDbContext(_connectionString))
             {
-                var unitP = await uow.UnitPersonRepository.GetUnitPeopleByUnitIdWhereToIsNullAsync(unitPerson.UnitId, unitPerson.IsOwner); 
+                var unitP = await apartmentDb.UnitPersonRepository.GetUnitPeopleByUnitIdWhereToIsNullAsync(unitPerson.UnitId, unitPerson.IsOwner); 
                 if(unitPerson.PersonId == unitP.PersonId) // specified person is already owner/resident of the unit.
                 {
                      return;
@@ -28,10 +29,10 @@ namespace Asa.ApartmentSystem.ApplicationService.ManageOwnership
                 else
                 {
                      unitP.To = unitPerson.From;
-                     await uow.UnitPersonRepository.UpdateUnitPersonAsync(unitP);
+                     await apartmentDb.UnitPersonRepository.UpdateUnitPersonAsync(unitP);
                 }
-                await uow.UnitPersonRepository.InsertUnitPersonAsync(unitPerson);
-                await uow.Commit();
+                await apartmentDb.UnitPersonRepository.InsertUnitPersonAsync(unitPerson);
+                await apartmentDb.Commit();
             }
         }
     }

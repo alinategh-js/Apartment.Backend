@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ASa.ApartmentManagement.Core.ManageOwnership.Domain
 {
-    public class UnitPerson
+    public class PersonUnit
     {
         public int Id { get; set; }
         public int UnitId { get; set; }

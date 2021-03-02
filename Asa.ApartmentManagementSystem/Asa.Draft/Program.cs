@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Asa.Draft.Domain;
 using Microsoft.EntityFrameworkCore;
-using ASa.ApartmentManagement.Core.ChargeCalculation.Domain.CalculationFormula;
 using Asa.ApartmentSystem.Infra.DataGateways;
 using System.Data.SqlClient;
 using ASa.ApartmentManagement.Core.BaseInfo.DTOs;
@@ -214,9 +213,9 @@ namespace Asa.Draft
             #endregion params
 
             #region Reflection
-            var formulaNames = CalculationFormulaFactory.GetAll();
-            var formula = CalculationFormulaFactory.Create(formulaNames[0].TypeName);
-            var share = formula.Calculate(null, null, 1);
+            //var formulaNames = CalculationFormulaFactory.GetAll();
+            //var formula = CalculationFormulaFactory.Create(formulaNames[0].TypeName);
+            //var share = formula.Calculate(null, null, 1);
             #endregion Reflection
             Console.WriteLine("Done");
             Console.ReadLine();

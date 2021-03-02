@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Asa.ApartmentSystem.API.Models
 {
-    public class UnitPerson
+    public class UnitPersonModel
     {
         public int UnitId { get; set; }
         public int UnitNumber { get; set; }

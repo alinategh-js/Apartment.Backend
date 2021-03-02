@@ -1,6 +1,4 @@
 ﻿using ASa.ApartmentManagement.Core;
-using ASa.ApartmentManagement.Core.ChargeCalculation.Domain;
-using ASa.ApartmentManagement.Core.ChargeCalculation.Repositories;
 using ASa.ApartmentManagement.Core.ManageOwnership.Domain;
 using ASa.ApartmentManagement.Core.ManageOwnership.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -11,28 +9,23 @@ using System.Threading.Tasks;
 
 namespace Asa.ApartmentSystem.Infra.Repositories
 {
-    public class ApartmentDbContext : DbContext,IUnitOfWork
+    public class ApartmentDbContext : DbContext
     {
+        string _connectionString;
+        public ApartmentDbContext(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("ConnectionString");//TODO : put CNX here
+            optionsBuilder.UseSqlServer(_connectionString);
         }
 
         public Task Commit() => this.SaveChangesAsync();
         
 
-
-        public DbSet<Building> Buildings { get; set; }
-        public DbSet<Charge> Charges { get; set; }
-        public DbSet<Expens> Expenses { get; set; }
-        public DbSet<UnitPerson> UnitPeople { get; set; }
-
-        public IBuildingRepository BuildingRepository => new EfBuildingRepository(this);
-
-        public IExpensRepository ExpensRepository => new EfExpensRepository(this);
-
-        public IChargeRepository ChargeRepository => new EfChargeRepository(this);
+        public DbSet<PersonUnit> PersonUnit { get; set; }
 
         public IUnitPersonRepository UnitPersonRepository => new EfUnitPersonRepository(this);
     }

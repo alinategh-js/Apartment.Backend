@@ -1,5 +1,8 @@
 ﻿using Asa.ApartmentSystem.API.Models;
 using Asa.ApartmentSystem.ApplicationService;
+using Asa.ApartmentSystem.ApplicationService.ManageOwnership;
+using Asa.ApartmentSystem.Infra.Repositories;
+using ASa.ApartmentManagement.Core.ManageOwnership.Domain;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -14,25 +17,27 @@ namespace Asa.ApartmentSystem.API.Controllers
     [EnableCors("React")]
     public class UnitsController : ControllerBase
     {
-        private readonly BuildingInfoApplicationService _service;
+        private readonly BuildingInfoApplicationService _buildingService;
+        private readonly ManageOwnershipApplicationService _manageService;
 
         public UnitsController()
         {
             var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ApartmentManagementCNX"].ConnectionString;
-            _service = new BuildingInfoApplicationService(connectionString);
+            _buildingService = new BuildingInfoApplicationService(connectionString);
+            _manageService = new ManageOwnershipApplicationService(connectionString);
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UnitPerson>>> GetUnitsByPage([FromQuery] int page, [FromQuery] int size)
+        public async Task<ActionResult<IEnumerable<UnitPersonModel>>> GetUnitsByPage([FromQuery] int page, [FromQuery] int size)
         {
-            var unitPersonDTOList = await _service.GetUnitsByPage(page, size);
+            var unitPersonDTOList = await _buildingService.GetUnitsByPage(page, size);
             // we then need to know how many pages exists, we get the count of all the records and calculate total pages:
-            var totalPages = await _service.GetCountOfUnitPerson() / size;
+            var totalPages = await _buildingService.GetCountOfUnitPerson() / size;
 
-            List<UnitPerson> result = new List<UnitPerson>();
+            List<UnitPersonModel> result = new List<UnitPersonModel>();
             foreach (var u in unitPersonDTOList)
             {
-                var unitPerson = new UnitPerson { TotalPages = totalPages, UnitId = u.UnitId, Area = u.Area, OwnerName = u.OwnerName, ResidentName = u.ResidentName, UnitNumber = u.UnitNumber };
+                var unitPerson = new UnitPersonModel { TotalPages = totalPages, UnitId = u.UnitId, Area = u.Area, OwnerName = u.OwnerName, ResidentName = u.ResidentName, UnitNumber = u.UnitNumber };
                 result.Add(unitPerson);
             }
             return Ok(result);
@@ -41,14 +46,18 @@ namespace Asa.ApartmentSystem.API.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> InsertUnit([FromBody] UnitDataRequest unitData)
         {
-            int unitId = await _service.InsertUnit(unitData.BuildingId, unitData.Number, Convert.ToDecimal(unitData.Area));
+            int unitId = await _buildingService.InsertUnit(unitData.BuildingId, unitData.Number, Convert.ToDecimal(unitData.Area));
             return unitId;
         }
 
-        //[HttpPut("{id}")]
-        //public async Task<ActionResult> SetUnitOwnerResident([FromBody] OwnerResidentRequest ownerResidentRequest)
-        //{
-
-        //}
+        [HttpPut("{unitId}")]
+        public async Task<ActionResult> SetUnitOwnerResident([FromBody] OwnerResidentRequest ownerResidentRequest, [FromRoute] int unitId)
+        {
+            var owner = new PersonUnit { From = ownerResidentRequest.Date, PersonId = ownerResidentRequest.OwnerId, UnitId = unitId, IsOwner = true };
+            await _manageService.ManageOwnerResidentForUnit(owner);
+            var resident = new PersonUnit { From = ownerResidentRequest.Date, PersonId = ownerResidentRequest.ResidentId, UnitId = unitId, IsOwner = false };
+            await _manageService.ManageOwnerResidentForUnit(resident);
+            return Ok();
+        }
     }
 }

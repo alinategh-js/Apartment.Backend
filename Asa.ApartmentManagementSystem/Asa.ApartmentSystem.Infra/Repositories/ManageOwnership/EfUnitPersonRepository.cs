@@ -15,21 +15,21 @@ namespace Asa.ApartmentSystem.Infra.Repositories
             this._dbContext = dbContext;
         }
 
-        public Task<UnitPerson> GetUnitPeopleByUnitIdWhereToIsNullAsync(int unitId, bool isOwner)
+        public Task<PersonUnit> GetUnitPeopleByUnitIdWhereToIsNullAsync(int unitId, bool isOwner)
         {
-            var res = _dbContext.UnitPeople.SingleOrDefault(unitPerson => unitPerson.UnitId == unitId && unitPerson.To == null && unitPerson.IsOwner == isOwner);
+            var res = _dbContext.PersonUnit.FirstOrDefault(unitPerson => unitPerson.UnitId == unitId && unitPerson.To == null && unitPerson.IsOwner == isOwner);
             return Task.FromResult(res);
         }
 
-        public Task InsertUnitPersonAsync(UnitPerson unitPerson)
+        public Task InsertUnitPersonAsync(PersonUnit unitPerson)
         {
-            _dbContext.UnitPeople.Add(unitPerson);
+            _dbContext.PersonUnit.Add(unitPerson);
             return Task.CompletedTask;
         }
 
-        public Task UpdateUnitPersonAsync(UnitPerson unitPerson)
+        public Task UpdateUnitPersonAsync(PersonUnit unitPerson)
         {
-            _dbContext.UnitPeople.Update(unitPerson);
+            _dbContext.PersonUnit.Update(unitPerson);
             return Task.CompletedTask;
         }
     }

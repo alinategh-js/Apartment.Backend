@@ -8,6 +8,7 @@ namespace Asa.ApartmentSystem.API.Models
     public class OwnerResidentRequest
     {
         public int OwnerId { get; set; }
-        public int MyProperty { get; set; }
+        public int ResidentId { get; set; }
+        public DateTime Date { get; set; }
     }
 }
