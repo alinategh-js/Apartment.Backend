@@ -46,5 +46,11 @@ namespace Asa.ApartmentSystem.API.Controllers
             int unitId = await _service.InsertUnit(unitData.BuildingId, unitData.Number, Convert.ToDecimal(unitData.Area));
             return unitId;
         }
+
+        //[HttpPut("{id}")]
+        //public async Task<ActionResult> SetUnitOwnerResident([FromBody] OwnerResidentRequest ownerResidentRequest)
+        //{
+
+        //}
     }
 }

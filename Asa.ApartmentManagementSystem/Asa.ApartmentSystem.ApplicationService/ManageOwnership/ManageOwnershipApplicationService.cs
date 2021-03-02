@@ -20,16 +20,17 @@ namespace Asa.ApartmentSystem.ApplicationService.ManageOwnership
         {
             using (var uow = _unitOfWorkFactory.Create())
             {
-                var unitPeople = await uow.UnitPersonRepository.GetUnitPeopleByUnitIdWhereToIsNullAsync(unitPerson.UnitId, unitPerson.IsOwner); 
-                if(unitPeople == null) // no records exists
+                var unitP = await uow.UnitPersonRepository.GetUnitPeopleByUnitIdWhereToIsNullAsync(unitPerson.UnitId, unitPerson.IsOwner); 
+                if(unitPerson.PersonId == unitP.PersonId) // specified person is already owner/resident of the unit.
                 {
-                    //insert new record
-                    await uow.UnitPersonRepository.InsertUnitPersonAsync(unitPerson);
+                     return;
                 }
-                else 
+                else
                 {
-
+                     unitP.To = unitPerson.From;
+                     await uow.UnitPersonRepository.UpdateUnitPersonAsync(unitP);
                 }
+                await uow.UnitPersonRepository.InsertUnitPersonAsync(unitPerson);
                 await uow.Commit();
             }
         }
