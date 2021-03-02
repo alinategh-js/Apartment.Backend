@@ -48,6 +48,12 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
             return await tableGateway.GetAllExpenseTypesByPageAsync(page, size);
         }
 
+        public async Task<int> GetTotalCountOfExpenseTypesAsync()
+        {
+            var tableGateway = _tablegatwayFactory.CreateIExpenseTypeTableGateway();
+            return await tableGateway.GetTotalCountOfExpenseTypes();
+        }
+
         public async Task<int> CreateExpenseTypeAsync(ExpenseTypeDTO expenseType)
         {
             const int MAX_EXPENSE_TYPE_NAME_LENGTH = 50;
@@ -57,7 +63,12 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
 
             if (personNameIsNotValid)
             {
-                throw new ValidationException(ErrorCodes.Invalid_Person_Name, $"Person name should be between {MIN_EXPENSE_TYPE_NAME_LENGTH} and {MAX_EXPENSE_TYPE_NAME_LENGTH}.");
+                throw new ValidationException(ErrorCodes.Invalid_Expense_Type_Name, $"ExpenseType name should be between {MIN_EXPENSE_TYPE_NAME_LENGTH} and {MAX_EXPENSE_TYPE_NAME_LENGTH}.");
+            }
+
+            if (!Enum.IsDefined(typeof(ErrorCodes), expenseType.Formula))
+            {
+                throw new ValidationException(ErrorCodes.Invalid_Formula, $"There is no such formula as {expenseType.Formula}");
             }
 
             var tableGateway = _tablegatwayFactory.CreateIExpenseTypeTableGateway();

@@ -14,5 +14,7 @@ namespace ASa.ApartmentManagement.Core.Common
         public const int Building_Not_Found = 1004;
         public const int Building_Already_Exists = 1005;
         public const int Person_Not_Found = 1005;
+        public const int Invalid_Expense_Type_Name = 1006;
+        public const int Invalid_Formula = 1007;
     }
 }

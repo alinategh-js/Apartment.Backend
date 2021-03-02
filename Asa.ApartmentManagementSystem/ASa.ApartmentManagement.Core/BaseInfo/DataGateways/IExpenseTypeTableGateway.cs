@@ -9,6 +9,7 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.DataGateways
     public interface IExpenseTypeTableGateway
     {
         Task<IEnumerable<ExpenseTypeDTO>> GetAllExpenseTypesByPageAsync(int page, int size);
+        Task<int> GetTotalCountOfExpenseTypes();
         Task<int> InsertExpenseTypeAsync(ExpenseTypeDTO expenseType);
         Task DeleteExpenseTypeByIdAsync(int typeId);
     }

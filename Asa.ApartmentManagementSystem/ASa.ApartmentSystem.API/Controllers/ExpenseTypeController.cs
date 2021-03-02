@@ -23,15 +23,13 @@ namespace Asa.ApartmentSystem.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ExpenseType>>> GetPeople([FromBody] ExpenseTypeRequest req)
+        public async Task<ActionResult<IEnumerable<ExpenseType>>> GetAllExpenseTypesByPage([FromBody] ExpenseTypeRequest req)
         {
             var expenseTypeList = await _service.GetAllExpenseTypesByPageAsync(req.Page, req.Size);
-            // TODO: Add GetTotalCountOfExpenseTypeAsync to service
-            //var totalCount = await _service.GetTotalCountOfExpenseTypeAsync();
-            //var totalPages = totalCount / req.Size;
+            var totalCount = await _service.GetTotalCountOfExpenseTypesAsync();
+            var totalPages = totalCount / req.Size;
 
-            // TODO: Check if this is right or not!
-            if (expenseTypeList == null)
+            if (expenseTypeList.Count() == 0)
             {
                 return NotFound("No people to show.");
             }
