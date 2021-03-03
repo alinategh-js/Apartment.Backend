@@ -117,7 +117,7 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
                 {
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.CommandText = "[dbo].[SpGetExpenseTypeById]";
-                    cmd.Parameters.AddWithValue("@expenseTypeById", expenseTypeId);
+                    cmd.Parameters.AddWithValue("@expenseTypeId", expenseTypeId);
                     cmd.Connection = connection;
                     cmd.Connection.Open();
                     using (var dataReader = await cmd.ExecuteReaderAsync())
