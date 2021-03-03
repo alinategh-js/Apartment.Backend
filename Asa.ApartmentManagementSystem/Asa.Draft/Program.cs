@@ -12,6 +12,10 @@ using Microsoft.EntityFrameworkCore;
 using Asa.ApartmentSystem.Infra.DataGateways;
 using System.Data.SqlClient;
 using ASa.ApartmentManagement.Core.BaseInfo.DTOs;
+using Asa.ApartmentSystem.API.Controllers;
+using Asa.ApartmentSystem.API.Models;
+using Asa.ApartmentSystem.Infra.Repositories;
+using ASa.ApartmentManagement.Core.ManageOwnership.Domain;
 
 namespace Asa.Draft
 {
@@ -217,6 +221,18 @@ namespace Asa.Draft
             //var formula = CalculationFormulaFactory.Create(formulaNames[0].TypeName);
             //var share = formula.Calculate(null, null, 1);
             #endregion Reflection
+
+            //var unitController = new UnitsController();
+            //var unitOwnerResidentRequest = new OwnerResidentRequest { Date = new DateTime(2015, 12, 31), OwnerId = 21, ResidentId = 22 };
+            //await unitController.SetUnitOwnerResident(unitOwnerResidentRequest, 3);
+
+            var apartmentContext = new ApartmentDbContext(connectionString);
+            var x = await apartmentContext.UnitPersonRepository.GetUnitPeopleByUnitIdWhereToIsNullAsync(3, true);
+
+            //var unitPerson = new PersonUnit { From = new DateTime(2015, 12, 31), IsOwner = true, UnitId = 9, PersonId = 29};
+            //await apartmentContext.UnitPersonRepository.InsertUnitPersonAsync(unitPerson);
+            //apartmentContext.PersonUnit.Add(unitPerson);
+            await apartmentContext.Commit();
             Console.WriteLine("Done");
             Console.ReadLine();
         }

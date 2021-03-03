@@ -28,6 +28,7 @@ namespace Asa.ApartmentSystem.API
         {
             services.AddCors(options => options.AddPolicy("React", options => options.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
             services.AddControllers();
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,7 +38,11 @@ namespace Asa.ApartmentSystem.API
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
             app.UseHttpsRedirection();
 
             app.UseRouting();

@@ -6,7 +6,7 @@ namespace ASa.ApartmentManagement.Core.Common
 {
     public enum FormulaType
     {
-        None,
+        Constant,
         ByArea,
         ByPeople,
         ByPeopleAndArea
