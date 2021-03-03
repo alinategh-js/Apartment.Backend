@@ -80,7 +80,7 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.CommandText = "[dbo].[SpInsertExpenseType]";
                     cmd.Parameters.AddWithValue("@name", expenseType.Name);
-                    cmd.Parameters.AddWithValue("@formula", expenseType.Formula);
+                    cmd.Parameters.AddWithValue("@formulaName", expenseType.Formula.ToString());
                     cmd.Connection = connection;
                     cmd.Connection.Open();
                     var result = await cmd.ExecuteScalarAsync();

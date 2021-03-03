@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Asa.ApartmentSystem.ApplicationService;
 using Asa.ApartmentSystem.API.Models;
 using Microsoft.AspNetCore.Cors;
+using ASa.ApartmentManagement.Core.Common;
 
 namespace Asa.ApartmentSystem.API.Controllers
 {
@@ -42,7 +43,7 @@ namespace Asa.ApartmentSystem.API.Controllers
 
                 expenseType.Id = receivedExpenseType.Id;
                 expenseType.Name = receivedExpenseType.Name;
-                expenseType.Formula = receivedExpenseType.Formula;
+                expenseType.Formula = (int)receivedExpenseType.Formula;
 
                 expenseTypes.Add(expenseType);
             }
@@ -53,7 +54,12 @@ namespace Asa.ApartmentSystem.API.Controllers
         [HttpPost]
         public async Task<ActionResult<int>> Post([FromBody] ExpenseType expenseType)
         {
-            return await _service.CreateExpenseTypeAsync(expenseType.Name, expenseType.Formula);
+            var formula = (FormulaType)expenseType.Formula;
+            if (!Enum.IsDefined(typeof(FormulaType), formula))
+            {
+                return NotFound($"Formula not supported.");
+            }
+            return await _service.CreateExpenseTypeAsync(expenseType.Name, formula);
         }
 
         [HttpDelete("{expenseTypeId}")]

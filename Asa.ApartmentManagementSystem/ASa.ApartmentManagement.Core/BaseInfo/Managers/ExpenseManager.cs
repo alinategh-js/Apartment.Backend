@@ -56,17 +56,17 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
 
         public async Task<int> CreateExpenseTypeAsync(ExpenseTypeDTO expenseType)
         {
-            const int MAX_EXPENSE_TYPE_NAME_LENGTH = 50;
+            const int MAX_EXPENSE_TYPE_NAME_LENGTH = 20;
             const int MIN_EXPENSE_TYPE_NAME_LENGTH = 5;
 
-            var personNameIsNotValid = string.IsNullOrWhiteSpace(expenseType.Name) || expenseType.Name.Length > MAX_EXPENSE_TYPE_NAME_LENGTH || expenseType.Name.Length < MIN_EXPENSE_TYPE_NAME_LENGTH;
+            var formulaTypeNameIsNotValid = string.IsNullOrWhiteSpace(expenseType.Name) || expenseType.Name.Length > MAX_EXPENSE_TYPE_NAME_LENGTH || expenseType.Name.Length < MIN_EXPENSE_TYPE_NAME_LENGTH;
 
-            if (personNameIsNotValid)
+            if (formulaTypeNameIsNotValid)
             {
                 throw new ValidationException(ErrorCodes.Invalid_Expense_Type_Name, $"ExpenseType name should be between {MIN_EXPENSE_TYPE_NAME_LENGTH} and {MAX_EXPENSE_TYPE_NAME_LENGTH}.");
             }
 
-            if (!Enum.IsDefined(typeof(ErrorCodes), expenseType.Formula))
+            if (!Enum.IsDefined(typeof(FormulaType), expenseType.Formula))
             {
                 throw new ValidationException(ErrorCodes.Invalid_Formula, $"There is no such formula as {expenseType.Formula}");
             }
