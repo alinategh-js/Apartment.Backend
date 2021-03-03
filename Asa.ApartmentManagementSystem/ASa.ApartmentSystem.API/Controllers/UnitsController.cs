@@ -53,9 +53,9 @@ namespace Asa.ApartmentSystem.API.Controllers
         [HttpPut("{unitId}")]
         public async Task<ActionResult> SetUnitOwnerResident([FromBody] OwnerResidentRequest ownerResidentRequest, [FromRoute] int unitId)
         {
-            var owner = new PersonUnit { From = ownerResidentRequest.Date, PersonId = ownerResidentRequest.OwnerId, UnitId = unitId, IsOwner = true };
+            var owner = new PersonUnit { From = ownerResidentRequest.Date, PersonId = ownerResidentRequest.OwnerId, UnitId = unitId, IsOwner = true, ResidentCount = ownerResidentRequest.ResidentCount };
             await _manageService.ManageOwnerResidentForUnit(owner);
-            var resident = new PersonUnit { From = ownerResidentRequest.Date, PersonId = ownerResidentRequest.ResidentId, UnitId = unitId, IsOwner = false };
+            var resident = new PersonUnit { From = ownerResidentRequest.Date, PersonId = ownerResidentRequest.ResidentId, UnitId = unitId, IsOwner = false, ResidentCount = ownerResidentRequest.ResidentCount };
             await _manageService.ManageOwnerResidentForUnit(resident);
             return Ok();
         }
