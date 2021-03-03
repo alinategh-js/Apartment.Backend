@@ -13,18 +13,18 @@ namespace Asa.ApartmentSystem.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors("React")]
-    public class ExpenseTypeController : ControllerBase
+    public class ExpenseTypesController : ControllerBase
     {
         private readonly ExpenseInfoApplicationService _service;
 
-        public ExpenseTypeController()
+        public ExpenseTypesController()
         {
             var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ApartmentManagementCNX"].ConnectionString;
             _service = new ExpenseInfoApplicationService(connectionString);
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ExpenseType>>> GetAllExpenseTypesByPage([FromBody] ExpenseTypeRequestGet req)
+        public async Task<ActionResult<GetExpenseTypesResponse>> GetAllExpenseTypesByPage([FromQuery] ExpenseTypeRequestGet req)
         {
             var expenseTypeList = await _service.GetAllExpenseTypesByPageAsync(req.Page, req.Size);
             var totalCount = await _service.GetTotalCountOfExpenseTypesAsync();
@@ -44,12 +44,12 @@ namespace Asa.ApartmentSystem.API.Controllers
                 expenseType.ExpenseTypeId = receivedExpenseType.ExpenseTypeId;
                 expenseType.Name = receivedExpenseType.Name;
                 expenseType.FormulaName = receivedExpenseType.FormulaName;
-                expenseType.TotalPages = totalPages;
 
                 expenseTypes.Add(expenseType);
             }
+            var response = new GetExpenseTypesResponse { ExpenseTypes = expenseTypes, TotalPages = totalPages };
 
-            return expenseTypes;
+            return response;
         }
 
         [HttpPost]

@@ -37,7 +37,7 @@ namespace Asa.ApartmentSystem.ApplicationService
             BuildingManager buildingManager = new BuildingManager(tableGatewayFactory);
             return await buildingManager.GetUnitByIdAsync(unitId);
         }
-
+        
         public async Task<IEnumerable<UnitPersonDTO>> GetUnitsByPage(int page, int size)
         {
             BuildingManager buildingManager = new BuildingManager(tableGatewayFactory);

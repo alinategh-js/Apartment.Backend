@@ -24,7 +24,7 @@ namespace Asa.ApartmentSystem.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Expense>>> GetExpensesByPage([FromBody] ExpenseRequest data)
+        public async Task<ActionResult<GetExpensesResponse>> GetExpensesByPage([FromQuery] ExpenseRequest data)
         {
             int page = data.Page;
             int size = data.Size;
@@ -43,7 +43,10 @@ namespace Asa.ApartmentSystem.API.Controllers
                 var expense = new Expense { TotalPages = totalPages, Id = e.Id, CategoryId = e.CategoryId, Cost = e.Cost, From= e.From, Title = e.Title, To = e.To , ExpenseTypeName = expenseTypeName};
                 result.Add(expense);
             }
-            return Ok(result);
+
+            var response = new GetExpensesResponse { TotalPages = totalPages, Expenses = result };
+
+            return Ok(response);
         }
 
         [HttpPost]

@@ -28,19 +28,22 @@ namespace Asa.ApartmentSystem.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UnitPersonModel>>> GetUnitsByPage([FromQuery] int page, [FromQuery] int size)
+        public async Task<ActionResult<GetUnitsResponse>> GetUnitsByPage([FromQuery] int page, [FromQuery] int size)
         {
             var unitPersonDTOList = await _buildingService.GetUnitsByPage(page, size);
             // we then need to know how many pages exists, we get the count of all the records and calculate total pages:
-            var totalPages = await _buildingService.GetCountOfUnitPerson() / size;
-
+            var totalCount = await _buildingService.GetCountOfUnitPerson();
+            var totalPagesDecimal = Math.Ceiling(Convert.ToDecimal(totalCount) /size);
+            var totalPages = Convert.ToInt32(totalPagesDecimal);
+             
             List<UnitPersonModel> result = new List<UnitPersonModel>();
             foreach (var u in unitPersonDTOList)
             {
-                var unitPerson = new UnitPersonModel { TotalPages = totalPages, UnitId = u.UnitId, Area = u.Area, OwnerName = u.OwnerName, ResidentName = u.ResidentName, UnitNumber = u.UnitNumber };
+                var unitPerson = new UnitPersonModel { UnitId = u.UnitId, Area = u.Area, OwnerName = u.OwnerName, ResidentName = u.ResidentName, UnitNumber = u.UnitNumber };
                 result.Add(unitPerson);
             }
-            return Ok(result);
+            var getUnitsResponse = new GetUnitsResponse { TotalPages = totalPages, UnitPersonModels = result };
+            return Ok(getUnitsResponse);
         }
 
         [HttpPost]

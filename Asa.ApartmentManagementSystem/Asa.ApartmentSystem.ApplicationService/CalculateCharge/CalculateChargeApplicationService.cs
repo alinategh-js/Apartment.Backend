@@ -46,7 +46,7 @@ namespace Asa.ApartmentSystem.ApplicationService.CalculateCharge
                 var totalUnits = units.Count;
                 foreach(var unit in units)
                 {
-                    var unitPerson = await apartmentDb.UnitPersonRepository.GetUnitPeopleByUnitIdWhereToIsNullAsync(unit.UnitId, true);
+                    var unitPerson = await apartmentDb.UnitPersonRepository.GetCurrentUnitPeopleByUnitIdAsync(unit.UnitId, true);
                     var peopleCount = unitPerson.ResidentCount;
                     var area = unit.Area;
                     totalPeople += peopleCount;
@@ -60,7 +60,7 @@ namespace Asa.ApartmentSystem.ApplicationService.CalculateCharge
                         // get expenseType using expense id
                         var expenseType = await apartmentDb.ExpenseTypeRepository.GetExpenseTypeByIdAsync(expense.ExpenseTypeId);
                         var forOwner = expenseType.ForOwner;
-                        var personUnit = await apartmentDb.UnitPersonRepository.GetUnitPeopleByUnitIdWhereToIsNullAsync(unit.UnitId, forOwner);
+                        var personUnit = await apartmentDb.UnitPersonRepository.GetCurrentUnitPeopleByUnitIdAsync(unit.UnitId, forOwner);
                         var payerId = personUnit.PersonId;
                         var thisUnitPeopleCount = personUnit.ResidentCount;
                         Enum.TryParse(expenseType.FormulaName, out FormulaType formulaType);

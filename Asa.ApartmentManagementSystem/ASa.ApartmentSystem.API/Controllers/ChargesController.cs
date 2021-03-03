@@ -40,16 +40,18 @@ namespace Asa.ApartmentSystem.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Charge>>> GetAllCharges()
+        public async Task<ActionResult<IEnumerable<ChargeResponse>>> GetAllCharges()
         {
             var charges = await _chargeService.GetAllCharges();
+            var chargeResponses = new List<ChargeResponse>();
             foreach (var charge in charges)
             {
                 var unit = await _manageService.GetUnitByIdAsync(charge.UnitId);
                 var unitNumber = unit.Number;
-                charge.UnitNumber = unitNumber;
+                var chargeResponse = new ChargeResponse { Amount = charge.Amount, ChargeId = charge.ChargeId, IssueDate = charge.IssueDate, UnitId = charge.UnitId, UnitNumber = unitNumber };
+                chargeResponses.Add(chargeResponse);
             }
-            return Ok(charges);
+            return Ok(chargeResponses);
         }
 
         [HttpGet("{chargeId}")]

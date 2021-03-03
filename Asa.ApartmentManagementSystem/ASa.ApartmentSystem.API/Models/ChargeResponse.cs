@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace Asa.ApartmentSystem.API.Models
 {
-    public class UnitPersonModel
+    public class ChargeResponse
     {
+        public int ChargeId { get; set; }
         public int UnitId { get; set; }
         public int UnitNumber { get; set; }
-        public string OwnerName { get; set; }
-        public string ResidentName { get; set; }
-        public decimal Area { get; set; }
+        public DateTime IssueDate { get; set; }
+        public decimal Amount { get; set; }
     }
 }

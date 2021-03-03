@@ -15,7 +15,7 @@ namespace Asa.ApartmentSystem.Infra.Repositories
             this._dbContext = dbContext;
         }
 
-        public Task<PersonUnit> GetUnitPeopleByUnitIdWhereToIsNullAsync(int unitId, bool isOwner)
+        public Task<PersonUnit> GetCurrentUnitPeopleByUnitIdAsync(int unitId, bool isOwner)
         {
             var res = _dbContext.PersonUnit.FirstOrDefault(unitPerson => unitPerson.UnitId == unitId && unitPerson.To == null && unitPerson.IsOwner == isOwner);
             return Task.FromResult(res);

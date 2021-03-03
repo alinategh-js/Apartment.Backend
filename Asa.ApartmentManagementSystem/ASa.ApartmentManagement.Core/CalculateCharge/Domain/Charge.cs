@@ -8,7 +8,6 @@ namespace ASa.ApartmentManagement.Core.CalculateCharge.Domain
     {
         public int ChargeId { get; set; }
         public int UnitId { get; set; }
-        public int UnitNumber { get; set; }
         public DateTime IssueDate { get; set; }
         public decimal Amount { get; set; }
     }

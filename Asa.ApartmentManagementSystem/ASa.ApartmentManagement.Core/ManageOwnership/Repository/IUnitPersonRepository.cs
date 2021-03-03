@@ -8,7 +8,7 @@ namespace ASa.ApartmentManagement.Core.ManageOwnership.Repository
 {
     public interface IUnitPersonRepository
     {
-        Task<PersonUnit> GetUnitPeopleByUnitIdWhereToIsNullAsync(int unitId, bool isOwner);
+        Task<PersonUnit> GetCurrentUnitPeopleByUnitIdAsync(int unitId, bool isOwner);
         Task InsertUnitPersonAsync(PersonUnit unitPerson);
         Task UpdateUnitPersonAsync(PersonUnit unitPerson);
     }

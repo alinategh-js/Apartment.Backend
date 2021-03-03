@@ -22,15 +22,18 @@ namespace Asa.ApartmentSystem.ApplicationService.ManageOwnership
         {
             using (var apartmentDb = new ApartmentDbContext(_connectionString))
             {
-                var unitP = await apartmentDb.UnitPersonRepository.GetUnitPeopleByUnitIdWhereToIsNullAsync(unitPerson.UnitId, unitPerson.IsOwner); 
-                if(unitPerson.PersonId == unitP.PersonId) // specified person is already owner/resident of the unit.
+                var unitP = await apartmentDb.UnitPersonRepository.GetCurrentUnitPeopleByUnitIdAsync(unitPerson.UnitId, unitPerson.IsOwner); 
+                if(unitP != null)
                 {
-                     return;
-                }
-                else
-                {
-                     unitP.To = unitPerson.From;
-                     await apartmentDb.UnitPersonRepository.UpdateUnitPersonAsync(unitP);
+                    if (unitPerson.PersonId == unitP.PersonId) // specified person is already owner/resident of the unit.
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        unitP.To = unitPerson.From;
+                        await apartmentDb.UnitPersonRepository.UpdateUnitPersonAsync(unitP);
+                    }
                 }
                 await apartmentDb.UnitPersonRepository.InsertUnitPersonAsync(unitPerson);
                 await apartmentDb.Commit();

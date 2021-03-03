@@ -227,8 +227,8 @@ namespace Asa.Draft
             //await unitController.SetUnitOwnerResident(unitOwnerResidentRequest, 3);
 
             var apartmentContext = new ApartmentDbContext(connectionString);
-            var x = await apartmentContext.UnitPersonRepository.GetUnitPeopleByUnitIdWhereToIsNullAsync(3, true);
-
+            //var x = await apartmentContext.UnitPersonRepository.GetCurrentUnitPeopleByUnitIdAsync(3, true);
+            var x = await apartmentContext.ChargeRepository.GetAllCharges();
             //var unitPerson = new PersonUnit { From = new DateTime(2015, 12, 31), IsOwner = true, UnitId = 9, PersonId = 29};
             //await apartmentContext.UnitPersonRepository.InsertUnitPersonAsync(unitPerson);
             //apartmentContext.PersonUnit.Add(unitPerson);

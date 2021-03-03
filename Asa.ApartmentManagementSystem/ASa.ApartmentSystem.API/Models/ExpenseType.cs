@@ -12,6 +12,5 @@ namespace Asa.ApartmentSystem.API.Models
         public string Name { get; set; }
         public string FormulaName { get; set; }
         public bool ForOwner { get; set; }
-        public int TotalPages { get; set; }
     }
 }
