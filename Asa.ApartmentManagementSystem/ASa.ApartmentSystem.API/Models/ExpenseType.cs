@@ -10,6 +10,6 @@ namespace Asa.ApartmentSystem.API.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public FormulaType Formula { get; set; }
+        public int Formula { get; set; }
     }
 }
