@@ -7,8 +7,9 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.DTOs
 {
     public class ExpenseTypeDTO
     {
-        public int Id { get; set; }
+        public int ExpenseTypeId { get; set; }
         public string Name { get; set; }
-        public FormulaType Formula { get; set; }
+        public string FormulaName { get; set; }
+        public bool ForOwner { get; set; }
     }
 }

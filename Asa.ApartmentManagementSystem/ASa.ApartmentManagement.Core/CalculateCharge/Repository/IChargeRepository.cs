@@ -9,5 +9,6 @@ namespace ASa.ApartmentManagement.Core.CalculateCharge.Repository
     public interface IChargeRepository
     {
         Task InsertCharge(Charge charge);
+        Task<IEnumerable<Charge>> GetAllCharges();
     }
 }

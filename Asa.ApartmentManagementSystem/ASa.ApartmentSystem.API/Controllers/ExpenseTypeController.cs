@@ -24,12 +24,12 @@ namespace Asa.ApartmentSystem.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ExpenseType>>> GetAllExpenseTypesByPage([FromBody] ExpenseTypeRequest req)
+        public async Task<ActionResult<IEnumerable<ExpenseType>>> GetAllExpenseTypesByPage([FromBody] ExpenseTypeRequestGet req)
         {
             var expenseTypeList = await _service.GetAllExpenseTypesByPageAsync(req.Page, req.Size);
             var totalCount = await _service.GetTotalCountOfExpenseTypesAsync();
-            var totalPages = totalCount / req.Size;
-
+            var totalPagesDecimal = Math.Ceiling(Convert.ToDecimal(totalCount) / req.Size);
+            var totalPages = Convert.ToInt32(totalPagesDecimal);
             if (expenseTypeList.Count() == 0)
             {
                 return NotFound("No people to show.");
@@ -41,9 +41,10 @@ namespace Asa.ApartmentSystem.API.Controllers
             {
                 var expenseType = new ExpenseType();
 
-                expenseType.Id = receivedExpenseType.Id;
+                expenseType.ExpenseTypeId = receivedExpenseType.ExpenseTypeId;
                 expenseType.Name = receivedExpenseType.Name;
-                expenseType.Formula = (int)receivedExpenseType.Formula;
+                expenseType.FormulaName = receivedExpenseType.FormulaName;
+                expenseType.TotalPages = totalPages;
 
                 expenseTypes.Add(expenseType);
             }
@@ -52,20 +53,27 @@ namespace Asa.ApartmentSystem.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> Post([FromBody] ExpenseType expenseType)
+        public async Task<ActionResult<int>> Post([FromBody] ExpenseTypeRequestPost expenseType)
         {
-            var formula = (FormulaType)expenseType.Formula;
+            Enum.TryParse(expenseType.FormulaName, out FormulaType formula);
             if (!Enum.IsDefined(typeof(FormulaType), formula))
             {
                 return NotFound($"Formula not supported.");
             }
-            return await _service.CreateExpenseTypeAsync(expenseType.Name, formula);
+            return await _service.CreateExpenseTypeAsync(expenseType.Name, formula, expenseType.ForOwner);
         }
 
         [HttpDelete("{expenseTypeId}")]
         public async Task Delete([FromRoute] int expenseTypeId)
         {
             await _service.DeleteExpenseTypeByIdAsync(expenseTypeId);
+        }
+
+        [HttpGet("formulas")]
+        public ActionResult<IEnumerable<string>> GetFormulas()
+        {
+            var formulas = Enum.GetNames(typeof(FormulaType));
+            return Ok(formulas.AsEnumerable());
         }
     }
 }

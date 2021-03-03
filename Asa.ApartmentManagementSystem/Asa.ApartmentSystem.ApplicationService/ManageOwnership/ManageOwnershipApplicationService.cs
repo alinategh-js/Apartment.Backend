@@ -1,5 +1,6 @@
 ﻿using Asa.ApartmentSystem.Infra.Repositories;
 using ASa.ApartmentManagement.Core;
+using ASa.ApartmentManagement.Core.CalculateCharge.Domain;
 using ASa.ApartmentManagement.Core.ManageOwnership.Domain;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,15 @@ namespace Asa.ApartmentSystem.ApplicationService.ManageOwnership
                 }
                 await apartmentDb.UnitPersonRepository.InsertUnitPersonAsync(unitPerson);
                 await apartmentDb.Commit();
+            }
+        }
+
+        public async Task<Unit> GetUnitByIdAsync(int unitId)
+        {
+            using (var apartmentDb = new ApartmentDbContext(_connectionString))
+            {
+                var unit = await apartmentDb.UnitRepository.GetUnitByIdAsync(unitId);
+                return unit;
             }
         }
     }

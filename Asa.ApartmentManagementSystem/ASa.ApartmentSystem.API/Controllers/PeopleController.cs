@@ -13,11 +13,11 @@ namespace Asa.ApartmentSystem.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [EnableCors("React")]
-    public class PersonController : ControllerBase
+    public class PeopleController : ControllerBase
     {
         private readonly PersonInfoApplicationService _service;
 
-        public PersonController()
+        public PeopleController()
         {
             var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ApartmentManagementCNX"].ConnectionString;
             _service = new PersonInfoApplicationService(connectionString);
@@ -38,7 +38,7 @@ namespace Asa.ApartmentSystem.API.Controllers
             return person;
         }
 
-        [HttpPut]
+        [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<PeopleAll>>> GetAllPeople()
         {
             var peopleDTOList = await _service.GetAllPeople();
@@ -57,11 +57,12 @@ namespace Asa.ApartmentSystem.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<People>>> GetPeopleByPage([FromBody] PeopleRequest req)
+        public async Task<ActionResult<GetPeopleResponse>> GetPeopleByPage([FromQuery] PeopleRequest req)
         {
             var peopleList = await _service.GetAllPeopleByPageAndType(req.Page, req.Size, req.IsOwner);
             var totalCount = await _service.GetTotalCountOfPeopleAsync();
-            var totalPages = totalCount / req.Size;
+            var totalPagesDecimal = Math.Ceiling(Convert.ToDecimal(totalCount) / req.Size);
+            var totalPages = Convert.ToInt32(totalPagesDecimal);
 
             if (peopleList == null)
             {
@@ -83,8 +84,8 @@ namespace Asa.ApartmentSystem.API.Controllers
 
                 people.Add(personInPeople);
             }
-
-            return people;
+            var getPeopleResponse = new GetPeopleResponse { People = people, TotalPages = totalPages };
+            return getPeopleResponse;
         }
 
         [HttpPost]
@@ -94,7 +95,7 @@ namespace Asa.ApartmentSystem.API.Controllers
         }
 
         [HttpPut("{personId}")]
-        public async Task<ActionResult<int>> Put([FromRoute] int personId, [FromBody] Person person)
+        public async Task<ActionResult<int>> Update([FromRoute] int personId, [FromBody] Person person)
         {
             return await _service.UpdatePersonAsync(personId, person.FullName, person.PhoneNumber);
         }

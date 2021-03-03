@@ -16,6 +16,23 @@ namespace Asa.ApartmentSystem.ApplicationService.CalculateCharge
             _connectionString = connectionString;
         }
 
+        public async Task<IEnumerable<Charge>> GetAllCharges()
+        {
+            using (var apartmentDb = new ApartmentDbContext(_connectionString))
+            {
+                var charges = await apartmentDb.ChargeRepository.GetAllCharges();
+                return charges;
+            }
+        }
+
+        public async Task<IEnumerable<ChargeItemView>> GetAllChargeItemsByChargeId(int chargeId)
+        {
+            using(var apartmentDb = new ApartmentDbContext(_connectionString))
+            {
+                return await apartmentDb.ChargeItemRepository.GetAllChargeItemsByChargeId(chargeId);
+            }
+        }
+
         public async Task CalculateCharges(DateTime from, DateTime to, DateTime issueDate)
         {
             using (var apartmentDb = new ApartmentDbContext(_connectionString))
@@ -52,7 +69,7 @@ namespace Asa.ApartmentSystem.ApplicationService.CalculateCharge
                         chargeItem.Calculate(formulaType, expense.Cost, totalArea, totalPeople, unit.Area, thisUnitPeopleCount, totalUnits);
                         charge.Amount += chargeItem.Amount;
                         // add charge item in "charge item DbSet"
-                        await apartmentDb.chargeItemRepository.InsertChargeItemAsync(chargeItem);
+                        await apartmentDb.ChargeItemRepository.InsertChargeItemAsync(chargeItem);
                     }
                     // add charge in "charge DbSet"
                     await apartmentDb.ChargeRepository.InsertCharge(charge);

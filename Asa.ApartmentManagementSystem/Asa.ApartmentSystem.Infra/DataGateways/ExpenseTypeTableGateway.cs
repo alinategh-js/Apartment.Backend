@@ -38,9 +38,10 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
                         {
                             var expenseType = new ExpenseTypeDTO();
 
-                            expenseType.Id = dataReader.Extract<int>("ExpenseTypeId");
-                            expenseType.Name = dataReader.Extract<string>("TypeName");
-                            expenseType.Formula = dataReader.Extract<FormulaType>("Formula");
+                            expenseType.ExpenseTypeId = dataReader.Extract<int>("ExpenseTypeId");
+                            expenseType.Name = dataReader.Extract<string>("Name");
+                            expenseType.FormulaName = dataReader.Extract<string>("FormulaName");
+                            expenseType.ForOwner = dataReader.Extract<bool>("ForOwner");
                             result.Add(expenseType);
                         }
                     }
@@ -80,7 +81,8 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
                     cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.CommandText = "[dbo].[SpInsertExpenseType]";
                     cmd.Parameters.AddWithValue("@name", expenseType.Name);
-                    cmd.Parameters.AddWithValue("@formulaName", expenseType.Formula.ToString());
+                    cmd.Parameters.AddWithValue("@formulaName", expenseType.FormulaName);
+                    cmd.Parameters.AddWithValue("@forOwner", expenseType.ForOwner);
                     cmd.Connection = connection;
                     cmd.Connection.Open();
                     var result = await cmd.ExecuteScalarAsync();
@@ -104,6 +106,32 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
                     await cmd.ExecuteScalarAsync();
                 }
             }
+        }
+
+        public async Task<ExpenseTypeDTO> GetExpenseTypeByIdAsync(int expenseTypeId)
+        {
+            var expenseTypeDTO = new ExpenseTypeDTO();
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[SpGetExpenseTypeById]";
+                    cmd.Parameters.AddWithValue("@expenseTypeById", expenseTypeId);
+                    cmd.Connection = connection;
+                    cmd.Connection.Open();
+                    using (var dataReader = await cmd.ExecuteReaderAsync())
+                    {
+                        await dataReader.ReadAsync();
+
+                        expenseTypeDTO.ExpenseTypeId = dataReader.Extract<int>("ExpenseTypeId");
+                        expenseTypeDTO.Name = dataReader.Extract<string>("Name");
+                        expenseTypeDTO.FormulaName = dataReader.Extract<string>("FormulaName");
+                        expenseTypeDTO.ForOwner = dataReader.Extract<bool>("ForOwner");
+                    }
+                }
+            }
+            return expenseTypeDTO;
         }
     }
 }

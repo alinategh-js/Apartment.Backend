@@ -34,10 +34,13 @@ namespace Asa.ApartmentSystem.API.Controllers
             var totalCount = await _service.GetCountOfExpenses();
             var totalPagesDecimal = Math.Ceiling(Convert.ToDecimal(totalCount) / size);
             var totalPages = Convert.ToInt32(totalPagesDecimal);
+            
             List<Expense> result = new List<Expense>();
             foreach (var e in expenseDTOList)
             {
-                var expense = new Expense { TotalPages = totalPages, Id = e.Id, CategoryId = e.CategoryId, Cost = e.Cost, From= e.From, Title = e.Title, To = e.To };
+                var expenseType = await _service.GetExpenseTypeByIdAsync(e.CategoryId);
+                var expenseTypeName = expenseType.Name;
+                var expense = new Expense { TotalPages = totalPages, Id = e.Id, CategoryId = e.CategoryId, Cost = e.Cost, From= e.From, Title = e.Title, To = e.To , ExpenseTypeName = expenseTypeName};
                 result.Add(expense);
             }
             return Ok(result);

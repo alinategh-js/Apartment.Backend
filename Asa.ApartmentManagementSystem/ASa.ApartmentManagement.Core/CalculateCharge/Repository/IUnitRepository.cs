@@ -9,5 +9,6 @@ namespace ASa.ApartmentManagement.Core.CalculateCharge.Repository
     public interface IUnitRepository
     {
         Task<ICollection<Unit>> GetAllUnitsAsync();
+        Task<Unit> GetUnitByIdAsync(int unitId);
     }
 }

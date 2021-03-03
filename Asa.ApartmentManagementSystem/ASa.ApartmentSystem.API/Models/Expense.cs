@@ -10,6 +10,7 @@ namespace Asa.ApartmentSystem.API.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public int CategoryId { get; set; }
+        public string ExpenseTypeName { get; set; }
         public DateTime From { get; set; }
         public DateTime To { get; set; }
         public decimal Cost { get; set; }

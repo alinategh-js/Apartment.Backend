@@ -66,9 +66,9 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
                 throw new ValidationException(ErrorCodes.Invalid_Expense_Type_Name, $"ExpenseType name should be between {MIN_EXPENSE_TYPE_NAME_LENGTH} and {MAX_EXPENSE_TYPE_NAME_LENGTH}.");
             }
 
-            if (!Enum.IsDefined(typeof(FormulaType), expenseType.Formula))
+            if (!Enum.IsDefined(typeof(FormulaType), expenseType.FormulaName))
             {
-                throw new ValidationException(ErrorCodes.Invalid_Formula, $"There is no such formula as {expenseType.Formula}");
+                throw new ValidationException(ErrorCodes.Invalid_Formula, $"There is no such formula as {expenseType.FormulaName}");
             }
 
             var tableGateway = _tablegatwayFactory.CreateIExpenseTypeTableGateway();
@@ -79,6 +79,12 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
         {
             var tableGateway = _tablegatwayFactory.CreateIExpenseTypeTableGateway();
             await tableGateway.DeleteExpenseTypeByIdAsync(expenseTypeId).ConfigureAwait(false);
+        }
+
+        public async Task<ExpenseTypeDTO> GetExpenseTypeByIdAsync(int expenseTypeId)
+        {
+            var tableGateway = _tablegatwayFactory.CreateIExpenseTypeTableGateway();
+            return await tableGateway.GetExpenseTypeByIdAsync(expenseTypeId);
         }
     }
 }

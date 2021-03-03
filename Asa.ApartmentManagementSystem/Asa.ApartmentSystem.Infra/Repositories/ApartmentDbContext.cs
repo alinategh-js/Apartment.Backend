@@ -1,4 +1,5 @@
 ﻿using Asa.ApartmentSystem.Infra.Repositories.CalculateCharge;
+using Asa.ApartmentSystem.Infra.Repositories.EfConfigurations;
 using Asa.ApartmentSystem.Infra.Repositories.ManageOwnership.EfConfigurations;
 using ASa.ApartmentManagement.Core;
 using ASa.ApartmentManagement.Core.CalculateCharge.Domain;
@@ -29,6 +30,7 @@ namespace Asa.ApartmentSystem.Infra.Repositories
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(PersonUnitEntityConfiguration).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ChargeItemViewEntityConfiguration).Assembly);
         }
 
         public Task Commit() => this.SaveChangesAsync();
@@ -40,6 +42,7 @@ namespace Asa.ApartmentSystem.Infra.Repositories
         public DbSet<Expense> Expense { get; set; }
         public DbSet<ExpenseType> ExpenseType { get; set; }
         public DbSet<Unit> Unit { get; set; }
+        public DbSet<ChargeItemView> ChargeItemView { get; set; }
 
 
         public IUnitPersonRepository UnitPersonRepository => new EfUnitPersonRepository(this);
@@ -47,6 +50,6 @@ namespace Asa.ApartmentSystem.Infra.Repositories
         public IExpenseRepository ExpenseRepository => new EfExpenseRepository(this);
         public IExpenseTypeRepository ExpenseTypeRepository => new EfExpenseTypeRepository(this);
         public IChargeRepository ChargeRepository => new EfChargeRepository(this);
-        public IChargeItemRepository chargeItemRepository => new EfChargeItemRepository(this);
+        public IChargeItemRepository ChargeItemRepository => new EfChargeItemRepository(this);
     }
 }

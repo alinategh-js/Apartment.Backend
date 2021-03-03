@@ -52,15 +52,20 @@ namespace Asa.ApartmentSystem.ApplicationService
             return await _expenseManager.GetTotalCountOfExpenseTypesAsync();
         }
 
-        public async Task<int> CreateExpenseTypeAsync(string name, FormulaType formulaType)
+        public async Task<int> CreateExpenseTypeAsync(string name, FormulaType formulaType, bool forOwner)
         {
-            var expenseType = new ExpenseTypeDTO { Name = name, Formula = formulaType };
+            var expenseType = new ExpenseTypeDTO { Name = name, FormulaName = formulaType.ToString(), ForOwner = forOwner };
             return await _expenseManager.CreateExpenseTypeAsync(expenseType);
         }
 
         public async Task DeleteExpenseTypeByIdAsync(int expenseTypeId)
         {
             await _expenseManager.DeleteExpenseTypeByIdAsync(expenseTypeId);
+        }
+
+        public async Task<ExpenseTypeDTO> GetExpenseTypeByIdAsync(int expenseTypeId)
+        {
+            return await _expenseManager.GetExpenseTypeByIdAsync(expenseTypeId);
         }
     }
 }

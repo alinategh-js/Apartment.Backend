@@ -21,5 +21,11 @@ namespace Asa.ApartmentSystem.Infra.Repositories.CalculateCharge
             var units = await _dbContext.Unit.ToListAsync();
             return units;
         }
+
+        public async Task<Unit> GetUnitByIdAsync(int unitId)
+        {
+            var unit = await _dbContext.Unit.FirstOrDefaultAsync(u => u.UnitId == unitId);
+            return unit;
+        }
     }
 }

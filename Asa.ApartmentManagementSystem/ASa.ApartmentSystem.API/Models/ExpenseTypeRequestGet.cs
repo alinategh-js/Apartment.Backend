@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Asa.ApartmentSystem.API.Models
 {
-    public class ExpenseTypeRequest
+    public class ExpenseTypeRequestGet
     {
         public int Page { get; set; }
         public int Size { get; set; }
