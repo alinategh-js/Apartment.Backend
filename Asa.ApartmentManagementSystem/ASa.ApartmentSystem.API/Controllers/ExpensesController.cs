@@ -40,7 +40,7 @@ namespace Asa.ApartmentSystem.API.Controllers
             {
                 var expenseType = await _service.GetExpenseTypeByIdAsync(e.CategoryId);
                 var expenseTypeName = expenseType.Name;
-                var expense = new Expense { TotalPages = totalPages, Id = e.Id, CategoryId = e.CategoryId, Cost = e.Cost, From= e.From, Title = e.Title, To = e.To , ExpenseTypeName = expenseTypeName};
+                var expense = new Expense { Id = e.Id, CategoryId = e.CategoryId, Cost = e.Cost, From= e.From, Title = e.Title, To = e.To , ExpenseTypeName = expenseTypeName};
                 result.Add(expense);
             }
 

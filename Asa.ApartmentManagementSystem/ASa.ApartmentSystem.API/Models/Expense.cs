@@ -14,6 +14,5 @@ namespace Asa.ApartmentSystem.API.Models
         public DateTime From { get; set; }
         public DateTime To { get; set; }
         public decimal Cost { get; set; }
-        public int TotalPages { get; set; }
     }
 }
