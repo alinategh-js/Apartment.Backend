@@ -33,7 +33,7 @@ namespace Asa.ApartmentSystem.API.Controllers
             var unitPersonDTOList = await _buildingService.GetUnitsByPage(page, size);
             // we then need to know how many pages exists, we get the count of all the records and calculate total pages:
             var totalCount = await _buildingService.GetCountOfUnitPerson();
-            var totalPagesDecimal = Math.Ceiling(Convert.ToDecimal(totalCount) /size);
+            var totalPagesDecimal = (int) Math.Ceiling( (double) totalCount /size);
             var totalPages = Convert.ToInt32(totalPagesDecimal);
              
             List<UnitPersonModel> result = new List<UnitPersonModel>();
