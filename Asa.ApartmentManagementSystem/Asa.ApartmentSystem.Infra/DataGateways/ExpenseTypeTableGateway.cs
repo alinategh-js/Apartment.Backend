@@ -18,6 +18,38 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
             _connectionString = connectionString ?? throw new ArgumentNullException(nameof(connectionString));
         }
 
+        public async Task<IEnumerable<ExpenseTypeDTO>> GetAllExpenseTypes()
+        {
+            var result = new List<ExpenseTypeDTO>();
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                using (var cmd = new SqlCommand())
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.CommandText = "[dbo].[SpGetAllExpenseTypes]";
+                    cmd.Connection = connection;
+                    cmd.Connection.Open();
+
+                    using (var dataReader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await dataReader.ReadAsync())
+                        {
+                            var expenseTypeDTO = new ExpenseTypeDTO();
+
+                            expenseTypeDTO.ExpenseTypeId = dataReader.Extract<int>("ExpenseTypeId");
+                            expenseTypeDTO.Name = dataReader.Extract<string>("Name");
+                            expenseTypeDTO.FormulaName = dataReader.Extract<string>("FormulaName");
+                            expenseTypeDTO.ForOwner = dataReader.Extract<bool>("ForOwner");
+
+                            result.Add(expenseTypeDTO);
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+
         public async Task<IEnumerable<ExpenseTypeDTO>> GetAllExpenseTypesByPageAsync(int page, int size)
         {
             var result = new List<ExpenseTypeDTO>();

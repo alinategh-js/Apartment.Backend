@@ -34,6 +34,8 @@ namespace Asa.ApartmentSystem.Infra.DataGateways
             }
         }
 
+        
+
         public async Task<IEnumerable<ExpenseDTO>> GetExpensesByPageAsync(int page, int size)
         {
             var result = new List<ExpenseDTO>();

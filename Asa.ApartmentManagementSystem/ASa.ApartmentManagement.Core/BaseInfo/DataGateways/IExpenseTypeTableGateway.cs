@@ -13,5 +13,6 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.DataGateways
         Task<int> InsertExpenseTypeAsync(ExpenseTypeDTO expenseType);
         Task DeleteExpenseTypeByIdAsync(int typeId);
         Task<ExpenseTypeDTO> GetExpenseTypeByIdAsync(int expenseTypeId);
+        Task<IEnumerable<ExpenseTypeDTO>> GetAllExpenseTypes();
     }
 }

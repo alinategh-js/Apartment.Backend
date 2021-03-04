@@ -24,6 +24,13 @@ namespace ASa.ApartmentManagement.Core.BaseInfo.Managers
             return expenseDTOList;
         }
 
+        public async Task<IEnumerable<ExpenseTypeDTO>> GetAllExpenseTypes()
+        {
+            IExpenseTypeTableGateway tableGateway = _tablegatwayFactory.CreateIExpenseTypeTableGateway();
+            IEnumerable<ExpenseTypeDTO> expenseTypeDTOList = await tableGateway.GetAllExpenseTypes().ConfigureAwait(false);
+            return expenseTypeDTOList;
+        }
+
         public async Task InsertExpenseAsync(ExpenseDTO expenseDTO)
         {
             IExpenseTableGateway tableGateway = _tablegatwayFactory.CreateIExpenseTableGateway();

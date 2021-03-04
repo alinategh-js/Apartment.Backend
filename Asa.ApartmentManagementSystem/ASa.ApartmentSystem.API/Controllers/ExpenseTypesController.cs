@@ -23,6 +23,19 @@ namespace Asa.ApartmentSystem.API.Controllers
             _service = new ExpenseInfoApplicationService(connectionString);
         }
 
+        [HttpGet("all")]
+        public async Task<ActionResult<IEnumerable<ExpenseType>>> GetAllExpenseTypes()
+        {
+            var expenseDTOList = await _service.GetAllExpenseTypes();
+            List<ExpenseType> result = new List<ExpenseType>();
+            foreach (var e in expenseDTOList)
+            {
+                var expenseType = new ExpenseType { ExpenseTypeId = e.ExpenseTypeId, FormulaName = e.FormulaName, ForOwner = e.ForOwner, Name = e.Name };
+                result.Add(expenseType);
+            }
+            return Ok(result);
+        }
+
         [HttpGet]
         public async Task<ActionResult<GetExpenseTypesResponse>> GetAllExpenseTypesByPage([FromQuery] ExpenseTypeRequestGet req)
         {

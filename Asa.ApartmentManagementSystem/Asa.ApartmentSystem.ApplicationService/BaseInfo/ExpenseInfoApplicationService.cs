@@ -26,6 +26,11 @@ namespace Asa.ApartmentSystem.ApplicationService
             return await _expenseManager.GetExpensesByPageAsync(page, size);
         }
 
+        public async Task<IEnumerable<ExpenseTypeDTO>> GetAllExpenseTypes()
+        {
+            return await _expenseManager.GetAllExpenseTypes();
+        }
+
         public async Task<int> InsertExpenseAsync(ExpenseDTO expenseDTO)
         {
             await _expenseManager.InsertExpenseAsync(expenseDTO);
