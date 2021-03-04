@@ -55,6 +55,8 @@ namespace Asa.ApartmentSystem.ApplicationService.CalculateCharge
                 foreach (var unit in units)
                 {
                     var charge = new Charge { UnitId = unit.UnitId, IssueDate = issueDate, Amount=0 };
+                    await apartmentDb.ChargeRepository.InsertCharge(charge);
+                    await apartmentDb.Commit();
                     foreach (var expense in expenses)
                     {
                         // get expenseType using expense id
@@ -72,7 +74,7 @@ namespace Asa.ApartmentSystem.ApplicationService.CalculateCharge
                         await apartmentDb.ChargeItemRepository.InsertChargeItemAsync(chargeItem);
                     }
                     // add charge in "charge DbSet"
-                    await apartmentDb.ChargeRepository.InsertCharge(charge);
+                    await apartmentDb.ChargeRepository.UpdateCharge(charge);
                 }
 
                 // save changes of DbSets to Database (commit)

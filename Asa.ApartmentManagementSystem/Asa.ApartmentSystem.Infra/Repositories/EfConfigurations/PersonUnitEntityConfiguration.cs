@@ -10,11 +10,11 @@ namespace Asa.ApartmentSystem.Infra.Repositories.ManageOwnership.EfConfiguration
     {
         public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<PersonUnit> builder)
         {
-            builder
-                 .Property(personUnit => personUnit.To)
-                 .IsRequired()
-                 .HasColumnType("Date")
-                 .HasDefaultValueSql("GetDate()");
+            //builder
+            //     .Property(personUnit => personUnit.To)
+            //     .IsRequired()
+            //     .HasColumnType("Date")
+            //     .HasDefaultValueSql("GetDate()");
         }
     }
 }

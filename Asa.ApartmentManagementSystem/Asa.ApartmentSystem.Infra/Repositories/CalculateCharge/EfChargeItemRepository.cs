@@ -26,5 +26,6 @@ namespace Asa.ApartmentSystem.Infra.Repositories.CalculateCharge
         {
             return await _dbContext.ChargeItemView.Where(chargeItem => chargeItem.ChargeId == chargeId).ToListAsync();
         }
+
     }
 }

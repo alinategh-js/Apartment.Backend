@@ -22,6 +22,7 @@ namespace Asa.ApartmentSystem.API.Controllers
         {
             var connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["ApartmentManagementCNX"].ConnectionString;
             _chargeService = new CalculateChargeApplicationService(connectionString);
+            _manageService = new ManageOwnershipApplicationService(connectionString);
         }
 
         [HttpPost]

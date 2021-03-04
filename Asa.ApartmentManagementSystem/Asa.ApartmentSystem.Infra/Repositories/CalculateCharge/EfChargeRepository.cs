@@ -27,5 +27,11 @@ namespace Asa.ApartmentSystem.Infra.Repositories.CalculateCharge
             _dbContext.Charge.Add(charge);
             return Task.CompletedTask;
         }
+
+        public Task UpdateCharge(Charge charge)
+        {
+            _dbContext.Charge.Update(charge);
+            return Task.CompletedTask;
+        }
     }
 }
